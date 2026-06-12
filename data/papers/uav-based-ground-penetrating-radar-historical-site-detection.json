@@ -1,0 +1,11 @@
+{
+  "slug": "uav-based-ground-penetrating-radar-historical-site-detection",
+  "title": "Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg",
+  "authors": ["Dimitar Rangelov", "Tasha Yara Kronshorst", "Jiri Jonker", "Kars Waanders", "Nilay Swarge", "Evgeni Genchev", "Sylvia Molthof", "Louise Lijcklama à Nijeholt", "Jaap Knotter"],
+  "year": 2025,
+  "venue": "Engineering, Technology & Applied Science Research 15(5), 28208–28218",
+  "doi": "10.48084/etasr.12914",
+  "url": "https://etasr.com/index.php/ETASR/article/view/12914",
+  "keywords": ["UAV", "drone", "ground-penetrating radar", "GPR", "remote sensing", "historical site detection", "WWII", "archaeology", "non-invasive prospection", "subsurface imaging"],
+  "abstract": "This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected World War II (WWII) hiding place near Bornerbroekseweg, the Netherlands. The survey area is an active farmland field with limited surface indicators and partially documented historical significance. A total of six UAV flight lines and four ground-based GPR paths were conducted to cover the site. Subsurface anomalies were identified at depths between approximately 0.2 and 1.5 m. Flight 6 revealed a near-surface reflection at 0.2–0.4 m, whereas Flight 4 showed a deeper horizontal anomaly at around 1.2–1.5 m. The integration of UAV and ground-based data enabled full-site coverage and localized resolution, supporting the identification of areas warranting further archaeological investigation. The results demonstrate the applicability of UAV-GPR for non-invasive prospection in rural historical sites with uncertain spatial records and suggest its value for informing targeted excavations."
+}

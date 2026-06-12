@@ -1,0 +1,14 @@
+{
+  "siteUrl": "https://mitkor2.github.io/3DReconstructionPapers",
+  "siteTitle": "3D Reconstruction Research Papers",
+  "description": "Peer-reviewed research papers by Dimitar Rangelov on 3D reconstruction, NeRF, Gaussian Splatting, photogrammetry, UAV/drone imaging and forensic crime scene investigation — with abstracts, keywords and full-text links.",
+  "author": {
+    "name": "Dimitar Rangelov",
+    "email": "dimitar.rangelov9@gmail.com",
+    "affiliation": "Saxion University of Applied Sciences",
+    "orcid": "https://orcid.org/0009-0005-8511-1555",
+    "googleScholar": "",
+    "website": "https://www.researchgate.net/profile/Dimitar-Rangelov-2"
+  },
+  "language": "en"
+}

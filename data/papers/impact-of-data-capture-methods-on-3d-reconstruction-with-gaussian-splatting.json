@@ -1,0 +1,13 @@
+{
+  "slug": "impact-of-data-capture-methods-on-3d-reconstruction-with-gaussian-splatting",
+  "title": "Impact of Data Capture Methods on 3D Reconstruction with Gaussian Splatting",
+  "authors": ["Dimitar Rangelov", "Sierd Waanders", "Kars Waanders", "Maurice van Keulen", "Radoslav Miltchev"],
+  "year": 2025,
+  "published": "2025-02-18",
+  "venue": "Journal of Imaging 11(2), 65",
+  "doi": "10.3390/jimaging11020065",
+  "url": "https://www.mdpi.com/2313-433X/11/2/65",
+  "pdf": "https://www.mdpi.com/2313-433X/11/2/65/pdf",
+  "keywords": ["3D reconstruction", "Gaussian Splatting", "NeRF", "data capture", "filming techniques", "camera orientation", "scanning path", "crime scene investigation", "forensics"],
+  "abstract": "This study examines how different filming techniques can enhance the quality of 3D reconstructions, with a particular focus on their use in indoor crime scene investigations. Using Neural Radiance Fields (NeRF) and Gaussian Splatting, the study explored how factors such as camera orientation, filming speed, data layering, and scanning path affect the detail and clarity of 3D reconstructions. Through experiments in a mock crime scene apartment, optimal filming methods that reduce noise and artifacts were identified: filming in landscape mode, at a slower speed, with at least three layers, and focused on key objects produces the most effective results. These findings provide practical guidelines for forensic teams and other practitioners seeking reliable, high-fidelity 3D reconstructions from video capture."
+}

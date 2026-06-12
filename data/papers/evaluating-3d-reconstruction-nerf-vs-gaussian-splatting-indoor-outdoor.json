@@ -1,0 +1,12 @@
+{
+  "slug": "evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor",
+  "title": "Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments",
+  "authors": ["Dimitar Rangelov", "Sierd Waanders", "Kars Waanders", "Evgeni Genchev", "Maurice van Keulen", "Radoslav Miltchev"],
+  "year": 2026,
+  "published": "2026-04-04",
+  "venue": "Engineering, Technology & Applied Science Research 16(2), 33736–33745",
+  "doi": "10.48084/etasr.16947",
+  "url": "https://etasr.com/index.php/ETASR/article/view/16947",
+  "keywords": ["3D reconstruction", "NeRF", "3D Gaussian Splatting", "indoor environments", "outdoor environments", "novel view synthesis", "reconstruction noise", "computational efficiency"],
+  "abstract": "This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor environments. Both algorithms were assessed on consistent datasets captured with a stabilized full-frame camera setup, using reconstruction noise, detail preservation, and processing time as key evaluation criteria. The results reveal that while both approaches generate high-fidelity reconstructions, 3DGS outperforms NeRF in computational efficiency and noise reduction, offering practical guidance for selecting a reconstruction pipeline depending on the scene type and application requirements."
+}

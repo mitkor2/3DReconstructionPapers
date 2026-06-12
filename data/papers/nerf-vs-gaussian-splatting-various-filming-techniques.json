@@ -1,0 +1,11 @@
+{
+  "slug": "nerf-vs-gaussian-splatting-various-filming-techniques",
+  "title": "Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques",
+  "authors": ["Dimitar Rangelov", "Sierd Waanders", "Kars Waanders", "Maurice van Keulen", "Radoslav Miltchev"],
+  "year": 2025,
+  "venue": "Preprints.org (preprint)",
+  "doi": "10.20944/preprints202504.1068.v1",
+  "url": "https://www.preprints.org/manuscript/202504.1068/v1",
+  "keywords": ["3D reconstruction", "NeRF", "3D Gaussian Splatting", "filming techniques", "video capture", "reconstruction quality", "novel view synthesis"],
+  "abstract": "This study presents a side-by-side comparison of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction under various filming techniques. The two approaches were evaluated on footage captured with different camera movements, orientations, and scanning strategies to determine how each filming technique affects reconstruction noise, detail preservation, and overall visual fidelity. The results provide practical recommendations on the filming styles best suited to each reconstruction method, helping practitioners capture footage that maximizes the quality of neural-rendering-based 3D reconstructions."
+}

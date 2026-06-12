@@ -1,0 +1,12 @@
+{
+  "slug": "impact-of-camera-settings-on-3d-reconstruction-quality",
+  "title": "Impact of Camera Settings on 3D Reconstruction Quality: Insights from NeRF and Gaussian Splatting",
+  "authors": ["Dimitar Rangelov", "Sierd Waanders", "Kars Waanders", "Maurice van Keulen", "Radoslav Miltchev"],
+  "year": 2024,
+  "venue": "Sensors 24(23), 7594",
+  "doi": "10.3390/s24237594",
+  "url": "https://www.mdpi.com/1424-8220/24/23/7594",
+  "pdf": "https://www.mdpi.com/1424-8220/24/23/7594/pdf",
+  "keywords": ["3D reconstruction", "NeRF", "Gaussian Splatting", "camera settings", "ISO", "shutter speed", "aperture", "crime scene investigation", "forensics", "neural rendering"],
+  "abstract": "This study explores the influence of various camera settings on the quality of 3D reconstructions, particularly in the context of indoor crime scene investigations. Using Neural Radiance Fields (NeRF) and Gaussian Splatting for 3D reconstruction, the study analyzed the impact of ISO, shutter speed, and aperture settings on the quality of the resulting 3D models. Through experiments in a mock crime scene environment, the camera configurations that produce the most detailed and artifact-free reconstructions were identified. The findings indicate that an ISO of 200, a shutter speed of 1/60 s, and an aperture of f/3.5 provide the best balance for high-quality 3D reconstructions, minimizing noise, motion blur, and depth-of-field artifacts. These insights offer practical guidance for forensic investigators and other practitioners capturing imagery for neural-rendering-based 3D reconstruction."
+}
