@@ -1,0 +1,11 @@
+{
+  "slug": "3d-reconstruction-in-crime-scenes-investigation",
+  "title": "3D Reconstruction in Crime Scenes Investigation: Impacts, Benefits, and Limitations",
+  "authors": ["Dimitar Rangelov", "Jaap Knotter", "Radoslav Miltchev"],
+  "year": 2024,
+  "venue": "Intelligent Systems and Applications (IntelliSys 2024), Lecture Notes in Networks and Systems, vol. 1065, pp. 46–64, Springer",
+  "doi": "10.1007/978-3-031-66329-1_4",
+  "url": "https://link.springer.com/chapter/10.1007/978-3-031-66329-1_4",
+  "keywords": ["3D reconstruction", "crime scene investigation", "forensics", "digital forensics", "photogrammetry", "laser scanning", "forensic documentation"],
+  "abstract": "Crime scene investigations are constantly changing and need innovative technology to increase their efficiency and precision. An example of such a technology is 3D reconstruction, which captures the physical attributes of real-world crime scenes and digitizes them into comprehensive three-dimensional models. This paper evaluates the impacts, benefits, and limitations of 3D reconstruction technologies in crime scene investigation, examining how digitized scenes improve documentation, measurement, analysis, and courtroom presentation, while also discussing practical constraints such as capture conditions, processing requirements, and admissibility considerations. The paper outlines best practices and future directions for integrating 3D reconstruction into forensic workflows."
+}
