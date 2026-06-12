@@ -1,88 +1,193 @@
-# 3D Reconstruction Research Papers — site
+<!-- Keywords: 3D reconstruction, NeRF, Neural Radiance Fields, 3D Gaussian Splatting, 3DGS, photogrammetry, Structure from Motion, Multi-View Stereo, novel view synthesis, UAV, drone, ground-penetrating radar, forensics, crime scene investigation, Dimitar Rangelov, Saxion -->
 
-A zero-dependency static site that lists research papers and is heavily optimized
-for **search engines** (Google, Bing, Google Scholar) and **LLM crawlers**
-(ClaudeBot, GPTBot, PerplexityBot, …).
+# Dimitar Rangelov — 3D Reconstruction Research Papers
 
-**Live site:** https://mitkor2.github.io/3DReconstructionPapers
-**Admin panel:** https://mitkor2.github.io/3DReconstructionPapers/admin/
+[![Website](https://img.shields.io/badge/Website-mitkor2.github.io-0b5fa5)](https://mitkor2.github.io/3DReconstructionPapers/)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0005--8511--1555-a6ce39?logo=orcid&logoColor=white)](https://orcid.org/0009-0005-8511-1555)
+[![Papers](https://img.shields.io/badge/Papers-7-success)]( https://mitkor2.github.io/3DReconstructionPapers/)
 
-## How it works
+> **Peer‑reviewed research on 3D reconstruction, NeRF (Neural Radiance Fields), 3D Gaussian Splatting, photogrammetry, UAV/drone sensing and forensic crime‑scene investigation — by [Dimitar Rangelov](https://orcid.org/0009-0005-8511-1555), Senior Researcher at Saxion University of Applied Sciences.**
+
+**🌐 Live site → https://mitkor2.github.io/3DReconstructionPapers/**
+
+This repository powers an open, fast, SEO‑optimized index of Dimitar Rangelov's publications. Every paper has its own page with a structured abstract, keywords, DOI, full‑text link, and machine‑readable metadata (Google Scholar `citation_*` tags, schema.org `ScholarlyArticle` JSON‑LD, `sitemap.xml`, and an [`llms.txt`](https://mitkor2.github.io/3DReconstructionPapers/llms.txt) feed) so that search engines and AI assistants (ChatGPT, Claude, Perplexity, Gemini) can discover, cite, and recommend the work accurately.
+
+---
+
+## 📚 Table of contents
+
+- [Research focus](#-research-focus)
+- [Publications](#-publications)
+- [How to cite](#-how-to-cite)
+- [About the author](#-about-the-author)
+- [For developers — how the site works](#-for-developers--how-the-site-works)
+- [Adding or editing papers](#-adding-or-editing-papers)
+- [Why this site ranks well (SEO & LLM optimization)](#-why-this-site-ranks-well-seo--llm-optimization)
+
+---
+
+## 🔬 Research focus
+
+3D reconstruction and computer vision for **forensics and crime‑scene investigation**, with a focus on modern neural‑rendering methods and field sensing:
+
+`3D reconstruction` · `Neural Radiance Fields (NeRF)` · `3D Gaussian Splatting (3DGS)` · `photogrammetry` · `Structure from Motion (SfM)` · `Multi‑View Stereo (MVS)` · `novel view synthesis` · `point clouds` · `UAV / drone imaging` · `ground‑penetrating radar (GPR)` · `digital forensics` · `crime‑scene documentation`
+
+---
+
+## 📄 Publications
+
+> Newest first. Click any title for the full abstract, keywords, citation and BibTeX.
+
+### 2026
+
+#### [Evaluating 3D Reconstruction: A Side‑by‑Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments](https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Evgeni Genchev, Maurice van Keulen, Radoslav Miltchev* — **Engineering, Technology & Applied Science Research 16(2), 33736–33745** — [doi:10.48084/etasr.16947](https://doi.org/10.48084/etasr.16947)
+
+A comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) across indoor and outdoor scenes, measuring reconstruction noise, detail preservation and processing time. 3DGS outperforms NeRF in computational efficiency and noise reduction.
+`NeRF` · `3D Gaussian Splatting` · `indoor` · `outdoor` · `novel view synthesis`
+
+### 2025
+
+#### [Three‑Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review](https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-techniques-lighting-conditions-review/)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Lights 1(1), 1** — [doi:10.3390/lights1010001](https://doi.org/10.3390/lights1010001)
+
+A comprehensive survey of classical and modern 3D reconstruction — SfM, MVS, Photometric Stereo, NeRF and 3DGS — critically evaluating performance under varying illumination and lighting‑induced artifacts.
+`review` · `lighting conditions` · `SfM` · `MVS` · `Photometric Stereo`
+
+#### [Impact of Data Capture Methods on 3D Reconstruction with Gaussian Splatting](https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-data-capture-methods-on-3d-reconstruction-with-gaussian-splatting/)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Journal of Imaging 11(2), 65** — [doi:10.3390/jimaging11020065](https://doi.org/10.3390/jimaging11020065)
+
+How camera orientation, filming speed, data layering and scanning path affect 3D reconstruction quality for indoor crime‑scene investigation.
+`Gaussian Splatting` · `data capture` · `filming techniques` · `forensics`
+
+#### [Evaluating 3D Reconstruction: A Side‑by‑Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques](https://mitkor2.github.io/3DReconstructionPapers/papers/nerf-vs-gaussian-splatting-various-filming-techniques/)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Preprint** — [doi:10.20944/preprints202504.1068.v1](https://doi.org/10.20944/preprints202504.1068.v1)
+
+A side‑by‑side comparison of NeRF and 3DGS under different camera movements, orientations and scanning strategies.
+`NeRF` · `3DGS` · `video capture`
+
+#### [Exploring the UAV‑Based Ground‑Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg](https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/)
+*Dimitar Rangelov, Tasha Yara Kronshorst, Jiri Jonker, Kars Waanders, Nilay Swarge, Evgeni Genchev, Sylvia Molthof, Louise Lijcklama à Nijeholt, Jaap Knotter* — **Engineering, Technology & Applied Science Research 15(5), 28208–28218** — [doi:10.48084/etasr.12914](https://doi.org/10.48084/etasr.12914)
+
+UAV‑mounted ground‑penetrating radar (UAV‑GPR) for non‑invasive detection of buried features at a suspected WWII site in the Netherlands.
+`UAV` · `drone` · `ground‑penetrating radar` · `archaeology` · `remote sensing`
+
+### 2024
+
+#### [3D Reconstruction in Crime Scenes Investigation: Impacts, Benefits, and Limitations](https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-in-crime-scenes-investigation/)
+*Dimitar Rangelov, Jaap Knotter, Radoslav Miltchev* — **IntelliSys 2024, Lecture Notes in Networks and Systems, vol. 1065, pp. 46–64, Springer** — [doi:10.1007/978-3-031-66329-1_4](https://doi.org/10.1007/978-3-031-66329-1_4)
+
+The impacts, benefits and limitations of 3D reconstruction for documentation, measurement, analysis and courtroom presentation in forensic workflows.
+`crime‑scene investigation` · `digital forensics` · `forensic documentation`
+
+#### [Impact of Camera Settings on 3D Reconstruction Quality: Insights from NeRF and Gaussian Splatting](https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-camera-settings-on-3d-reconstruction-quality/)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Sensors 24(23), 7594** — [doi:10.3390/s24237594](https://doi.org/10.3390/s24237594)
+
+How ISO, shutter speed and aperture affect NeRF and Gaussian Splatting reconstructions; identifies optimal settings (ISO 200, 1/60 s, f/3.5) for indoor crime scenes.
+`camera settings` · `ISO` · `shutter speed` · `aperture` · `neural rendering`
+
+---
+
+## 📌 How to cite
+
+Each paper page includes a ready‑to‑copy plain‑text citation **and a BibTeX entry**. Please cite the published version using its DOI. Example:
+
+```bibtex
+@article{rangelov2024impact,
+  author  = {Dimitar Rangelov and Sierd Waanders and Kars Waanders and Maurice van Keulen and Radoslav Miltchev},
+  title   = {{Impact of Camera Settings on 3D Reconstruction Quality: Insights from NeRF and Gaussian Splatting}},
+  journal = {Sensors 24(23), 7594},
+  year    = {2024},
+  doi     = {10.3390/s24237594}
+}
+```
+
+---
+
+## 👤 About the author
+
+**Dimitar Rangelov** — Senior Researcher (MSc, MBA), Head of the *CrimeBots* research line, Technologies for Criminal Investigations, **Saxion University of Applied Sciences**, Enschede, The Netherlands. Research integrates robotics, AI and sensing to advance crime‑scene investigation through 3D reconstruction.
+
+- 🆔 ORCID: [0009‑0005‑8511‑1555](https://orcid.org/0009-0005-8511-1555)
+- 🔬 ResearchGate: [Dimitar‑Rangelov‑2](https://www.researchgate.net/profile/Dimitar-Rangelov-2)
+- 🌐 Publications site: [mitkor2.github.io/3DReconstructionPapers](https://mitkor2.github.io/3DReconstructionPapers/)
+- 📡 Machine‑readable feeds: [`llms.txt`](https://mitkor2.github.io/3DReconstructionPapers/llms.txt) · [`sitemap.xml`](https://mitkor2.github.io/3DReconstructionPapers/sitemap.xml) · [`feed.xml`](https://mitkor2.github.io/3DReconstructionPapers/feed.xml)
+
+---
+
+## 🛠️ For developers — how the site works
+
+A **zero‑dependency static‑site generator** (plain Node.js, no `node_modules`). Paper data lives as JSON; a build script renders fully static, crawlable HTML.
 
 ```
-data/papers/*.json   →  scripts/build.js  →  dist/  →  GitHub Pages
+data/papers/*.json  →  node scripts/build.js  →  dist/  →  GitHub Pages
         ▲
-        └── the /admin/ panel commits these files via the GitHub API
+        └── the /admin/ panel edits these files via the GitHub API
 ```
 
-- Every paper gets its own page at `/papers/<slug>/` with:
-  - **Google Scholar (Highwire Press) meta tags** — `citation_title`, `citation_author`, `citation_pdf_url`, `citation_doi`, …
-  - **schema.org `ScholarlyArticle` JSON-LD** structured data
-  - Dublin Core, Open Graph and Twitter Card tags, canonical URL
-- Site-wide machine-readable endpoints: `sitemap.xml`, `robots.txt`,
-  **`llms.txt` and `llms-full.txt`** (full abstracts for LLM ingestion), and an Atom `feed.xml`.
-- 100% static HTML — no JavaScript needed to read content, so every crawler sees everything.
+### Local preview
 
-## One-time setup
+```bash
+npm run serve      # builds dist/ and serves it locally
+# or
+node scripts/build.js   # just build into dist/
+```
 
-1. **Make `main` the default branch** (if it isn't already) — the deploy workflow runs on pushes to `main`.
-2. **Enable GitHub Pages**: repo → *Settings* → *Pages* → under **Source**, choose **GitHub Actions**.
-3. **Create your admin "password"** — a GitHub fine-grained personal access token:
-   - Go to [github.com/settings/personal-access-tokens/new](https://github.com/settings/personal-access-tokens/new)
-   - Repository access: *Only select repositories* → this repo
-   - Permissions: **Contents → Read and write**
-   - Set a long expiration. This token is what you type into `/admin/` to sign in.
-4. **Edit `site.config.json`** — fill in your affiliation, ORCID iD and Google Scholar
-   profile URL. These are embedded in the structured data and strongly help
-   search engines connect the papers to you.
-5. Push to `main` (or run the *Build and deploy* workflow manually) — the site goes live.
-6. Open `/admin/`, sign in with the token, **delete the example paper** and add your real ones.
+### Project layout
 
-## Adding papers
+| Path | Purpose |
+|------|---------|
+| `data/papers/*.json` | One file per paper (title, authors, year, venue, DOI, keywords, abstract, PDF) |
+| `scripts/build.js` | Static‑site generator (HTML pages, sitemap, robots, llms.txt, feed) |
+| `assets/style.css` | Styles (inlined into every page at build time) |
+| `admin/index.html` | Password‑protected admin panel (GitHub token) |
+| `site.config.json` | Site title, description, author/ORCID/affiliation |
+| `.github/workflows/deploy.yml` | Builds and publishes to GitHub Pages on every push to `main` |
 
-Use the admin panel (recommended), or commit a JSON file to `data/papers/` directly:
+> ℹ️ **Branching:** edit sources on **`main`**. The build output is published to the branch GitHub Pages serves; that branch is overwritten on every deploy, so don't edit it by hand.
+
+---
+
+## ✍️ Adding or editing papers
+
+**Option A — Admin panel (no coding):** open [`/admin/`](https://mitkor2.github.io/3DReconstructionPapers/admin/), sign in with a GitHub fine‑grained token (Contents: Read & write), and add/edit/delete papers or upload PDFs. Changes commit to `main` and the site rebuilds automatically in ~1–2 minutes.
+
+**Option B — Edit JSON directly:** add a file to `data/papers/`:
 
 ```json
 {
-  "slug": "my-paper-2024",
+  "slug": "my-paper-2026",
   "title": "Paper title",
   "authors": ["Dimitar Rangelov", "Co Author"],
-  "year": 2024,
-  "published": "2024-05-17",
-  "venue": "Sensors 24(3)",
-  "doi": "10.3390/sXXXXXXX",
-  "url": "https://www.mdpi.com/...",
-  "pdf": "pdfs/my-paper-2024.pdf",
-  "keywords": ["3D reconstruction", "photogrammetry"],
+  "year": 2026,
+  "venue": "Journal Name 12(3), 45",
+  "doi": "10.xxxx/xxxxx",
+  "url": "https://publisher.example/article",
+  "pdf": "pdfs/my-paper-2026.pdf",
+  "keywords": ["3D reconstruction", "NeRF"],
   "abstract": "Full abstract text…"
 }
 ```
 
-PDFs go in `pdfs/` (the admin panel uploads them there for you). Only upload PDFs
-you have the right to share (preprints/author versions are usually fine — check the
-journal's self-archiving policy on [Sherpa Romeo](https://v2.sherpa.ac.uk/romeo/)).
+Only upload PDFs you have the right to share (author/preprint versions are usually permitted — check the journal policy on [Sherpa Romeo](https://v2.sherpa.ac.uk/romeo/)).
 
-## Local preview
+---
 
-```bash
-npm run serve   # builds and serves dist/ locally
-```
+## 🚀 Why this site ranks well (SEO & LLM optimization)
 
-## Maximizing reach (beyond this site)
+Built so both **search engines** and **AI assistants** can find, understand and cite the papers:
 
-The site does the on-page work, but indexing is also about signals pointing at it:
+- **Google Scholar indexing** — Highwire Press `citation_title`, `citation_author`, `citation_pdf_url`, `citation_doi` meta tags on every paper page.
+- **Structured data** — schema.org `ScholarlyArticle` + `BreadcrumbList` JSON‑LD, Dublin Core, Open Graph and Twitter cards.
+- **LLM‑friendly feeds** — [`llms.txt`](https://mitkor2.github.io/3DReconstructionPapers/llms.txt) and `llms-full.txt` expose titles, DOIs and full abstracts in plain text for ChatGPT, Claude, Perplexity and Gemini.
+- **Crawlability & speed** — 100% static HTML, inlined CSS (no render‑blocking requests), canonical URLs, `sitemap.xml`, `robots.txt`, Atom `feed.xml`, semantic markup and internal "related papers" links.
 
-- **Google Search Console**: add the site and submit `sitemap.xml` — fastest way to get indexed.
-  (Note: on a `*.github.io/<repo>` project site, `robots.txt` sits below the domain root so
-  crawlers ignore it — that's fine, since we want everything crawled and the admin page
-  carries its own `noindex` tag. Submitting the sitemap in Search Console replaces it.)
-- **Custom domain (optional but recommended)**: a domain like `rangelov-research.com`
-  ranks better, puts `robots.txt`/`llms.txt` at the domain root where crawlers expect them,
-  and survives any future move off GitHub Pages. Set it in repo *Settings → Pages*, then
-  update `siteUrl` in `site.config.json`.
-- **Bing Webmaster Tools**: same; Bing also feeds ChatGPT browsing.
-- **Google Scholar profile**: make sure each paper is in your profile; Scholar will pick up
-  the `citation_*` tags from these pages too.
-- **ORCID**: list all papers on your ORCID record and link it in `site.config.json`.
-- Link to this site from your **university page, LinkedIn, ResearchGate, GitHub profile** —
-  inbound links are still the #1 ranking signal, for LLMs' search tools as well.
+### Boosting reach further
+
+- Submit `sitemap.xml` in **Google Search Console** and **Bing Webmaster Tools** (Bing also feeds ChatGPT browsing).
+- Keep **ORCID** and your **Google Scholar** profile complete and linked.
+- Link to this site from your **university page, LinkedIn, ResearchGate and GitHub profile** — inbound links remain the strongest ranking signal.
+
+---
+
+<sub>This is a personal academic publications index. Paper copyrights remain with their respective publishers; this site links to official versions and shares author‑permitted full texts where available.</sub>
