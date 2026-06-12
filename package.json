@@ -1,0 +1,13 @@
+{
+  "name": "3d-reconstruction-papers",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SEO-optimized static site listing research papers, built for search engines and LLM crawlers.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "serve": "node scripts/build.js && npx -y serve dist"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

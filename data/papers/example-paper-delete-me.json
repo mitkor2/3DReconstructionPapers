@@ -1,0 +1,10 @@
+{
+  "slug": "example-paper-delete-me",
+  "title": "Example Paper — Replace Me via the Admin Panel",
+  "authors": ["Dimitar Rangelov"],
+  "year": 2026,
+  "venue": "Example Journal of 3D Reconstruction",
+  "doi": "",
+  "keywords": ["3D reconstruction", "photogrammetry", "example"],
+  "abstract": "This is a placeholder entry so you can see how a paper page looks. Open /admin/ on the deployed site, sign in with your GitHub token, delete this entry and add your real papers. Each paper gets its own SEO-optimized page with Google Scholar citation tags, schema.org structured data, and entries in the sitemap and llms.txt files."
+}

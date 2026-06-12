@@ -1,0 +1,14 @@
+{
+  "siteUrl": "https://mitkor2.github.io/3DReconstructionPapers",
+  "siteTitle": "3D Reconstruction Research Papers",
+  "description": "Peer-reviewed research papers on 3D reconstruction, photogrammetry, point clouds, drones/UAV imaging and computer vision — with abstracts, keywords and full-text PDFs.",
+  "author": {
+    "name": "Dimitar Rangelov",
+    "email": "dimitar.rangelov9@gmail.com",
+    "affiliation": "",
+    "orcid": "",
+    "googleScholar": "",
+    "website": ""
+  },
+  "language": "en"
+}
