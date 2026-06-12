@@ -211,7 +211,9 @@
     state.token = token;
     const res = await gh(`/repos/${C.owner}/${C.repo}`);
     if (res.status === 404) throw new Error("Repository not accessible with this token.");
-    state.branch = (await res.json()).default_branch;
+    // Commit to the configured content branch (the deploy workflow builds from
+    // it); fall back to the repo default branch if not configured.
+    state.branch = C.branch || (await res.json()).default_branch;
     await loadPapers();
     show("list-view");
   }

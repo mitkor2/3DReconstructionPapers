@@ -543,7 +543,7 @@ function adminPage() {
   const template = fs.readFileSync(path.join(ROOT, "admin", "index.html"), "utf8");
   const repoUrl = process.env.GITHUB_REPOSITORY || guessRepoFromUrl();
   const [owner, repo] = repoUrl.split("/");
-  const adminConfig = { owner, repo, siteUrl: SITE_URL, basePath: BASE_PATH };
+  const adminConfig = { owner, repo, siteUrl: SITE_URL, basePath: BASE_PATH, branch: "main" };
   return template.replace("/*__ADMIN_CONFIG__*/", `window.ADMIN_CONFIG = ${JSON.stringify(adminConfig)};`);
 }
 
