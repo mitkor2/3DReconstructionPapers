@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/</loc><lastmod>2026-06-12</lastmod><priority>1.0</priority></url>
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/</loc><lastmod>2026-06-12</lastmod><priority>0.9</priority></url>
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/papers/nerf-vs-gaussian-splatting-various-filming-techniques/</loc><lastmod>2026-06-12</lastmod><priority>0.9</priority></url>
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/</loc><lastmod>2026-06-12</lastmod><priority>0.9</priority></url>
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-data-capture-methods-on-3d-reconstruction-with-gaussian-splatting/</loc><lastmod>2026-06-12</lastmod><priority>0.9</priority></url>
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-techniques-lighting-conditions-review/</loc><lastmod>2026-06-12</lastmod><priority>0.9</priority></url>
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-in-crime-scenes-investigation/</loc><lastmod>2026-06-12</lastmod><priority>0.9</priority></url>
+  <url><loc>https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-camera-settings-on-3d-reconstruction-quality/</loc><lastmod>2026-06-12</lastmod><priority>0.9</priority></url>
+</urlset>

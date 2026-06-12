@@ -1,0 +1,97 @@
+# 3D Reconstruction Research Papers — full abstracts
+
+> Peer-reviewed research papers by Dimitar Rangelov on 3D reconstruction, NeRF, Gaussian Splatting, photogrammetry, UAV/drone imaging and forensic crime scene investigation — with abstracts, keywords and full-text links.
+
+## Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments
+
+- Authors: Dimitar Rangelov, Sierd Waanders, Kars Waanders, Evgeni Genchev, Maurice van Keulen, Radoslav Miltchev
+- Year: 2026
+- Published in: Engineering, Technology & Applied Science Research 16(2), 33736–33745
+- DOI: https://doi.org/10.48084/etasr.16947
+- URL: https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/
+- Keywords: 3D reconstruction, NeRF, 3D Gaussian Splatting, indoor environments, outdoor environments, novel view synthesis, reconstruction noise, computational efficiency
+
+### Abstract
+
+This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor environments. Both algorithms were assessed on consistent datasets captured with a stabilized full-frame camera setup, using reconstruction noise, detail preservation, and processing time as key evaluation criteria. The results reveal that while both approaches generate high-fidelity reconstructions, 3DGS outperforms NeRF in computational efficiency and noise reduction, offering practical guidance for selecting a reconstruction pipeline depending on the scene type and application requirements.
+
+## Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques
+
+- Authors: Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev
+- Year: 2025
+- Published in: Preprints.org (preprint)
+- DOI: https://doi.org/10.20944/preprints202504.1068.v1
+- URL: https://mitkor2.github.io/3DReconstructionPapers/papers/nerf-vs-gaussian-splatting-various-filming-techniques/
+- Keywords: 3D reconstruction, NeRF, 3D Gaussian Splatting, filming techniques, video capture, reconstruction quality, novel view synthesis
+
+### Abstract
+
+This study presents a side-by-side comparison of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction under various filming techniques. The two approaches were evaluated on footage captured with different camera movements, orientations, and scanning strategies to determine how each filming technique affects reconstruction noise, detail preservation, and overall visual fidelity. The results provide practical recommendations on the filming styles best suited to each reconstruction method, helping practitioners capture footage that maximizes the quality of neural-rendering-based 3D reconstructions.
+
+## Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg
+
+- Authors: Dimitar Rangelov, Tasha Yara Kronshorst, Jiri Jonker, Kars Waanders, Nilay Swarge, Evgeni Genchev, Sylvia Molthof, Louise Lijcklama à Nijeholt, Jaap Knotter
+- Year: 2025
+- Published in: Engineering, Technology & Applied Science Research 15(5), 28208–28218
+- DOI: https://doi.org/10.48084/etasr.12914
+- URL: https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/
+- Keywords: UAV, drone, ground-penetrating radar, GPR, remote sensing, historical site detection, WWII, archaeology, non-invasive prospection, subsurface imaging
+
+### Abstract
+
+This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected World War II (WWII) hiding place near Bornerbroekseweg, the Netherlands. The survey area is an active farmland field with limited surface indicators and partially documented historical significance. A total of six UAV flight lines and four ground-based GPR paths were conducted to cover the site. Subsurface anomalies were identified at depths between approximately 0.2 and 1.5 m. Flight 6 revealed a near-surface reflection at 0.2–0.4 m, whereas Flight 4 showed a deeper horizontal anomaly at around 1.2–1.5 m. The integration of UAV and ground-based data enabled full-site coverage and localized resolution, supporting the identification of areas warranting further archaeological investigation. The results demonstrate the applicability of UAV-GPR for non-invasive prospection in rural historical sites with uncertain spatial records and suggest its value for informing targeted excavations.
+
+## Impact of Data Capture Methods on 3D Reconstruction with Gaussian Splatting
+
+- Authors: Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev
+- Year: 2025
+- Published in: Journal of Imaging 11(2), 65
+- DOI: https://doi.org/10.3390/jimaging11020065
+- URL: https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-data-capture-methods-on-3d-reconstruction-with-gaussian-splatting/
+- PDF: https://www.mdpi.com/2313-433X/11/2/65/pdf
+- Keywords: 3D reconstruction, Gaussian Splatting, NeRF, data capture, filming techniques, camera orientation, scanning path, crime scene investigation, forensics
+
+### Abstract
+
+This study examines how different filming techniques can enhance the quality of 3D reconstructions, with a particular focus on their use in indoor crime scene investigations. Using Neural Radiance Fields (NeRF) and Gaussian Splatting, the study explored how factors such as camera orientation, filming speed, data layering, and scanning path affect the detail and clarity of 3D reconstructions. Through experiments in a mock crime scene apartment, optimal filming methods that reduce noise and artifacts were identified: filming in landscape mode, at a slower speed, with at least three layers, and focused on key objects produces the most effective results. These findings provide practical guidelines for forensic teams and other practitioners seeking reliable, high-fidelity 3D reconstructions from video capture.
+
+## Three-Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review
+
+- Authors: Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev
+- Year: 2025
+- Published in: Lights 1(1), 1
+- DOI: https://doi.org/10.3390/lights1010001
+- URL: https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-techniques-lighting-conditions-review/
+- PDF: https://www.mdpi.com/3042-7886/1/1/1/pdf
+- Keywords: 3D reconstruction, lighting conditions, Structure from Motion, Multi-View Stereo, Photometric Stereo, NeRF, Gaussian Splatting, neural rendering, review, illumination
+
+### Abstract
+
+3D reconstruction has become a fundamental technology in applications ranging from cultural heritage preservation and robotics to forensics and virtual reality, yet lighting conditions at capture time remain one of the most influential and widely neglected factors affecting reconstruction quality. This review provides a comprehensive survey of classical and modern 3D reconstruction techniques, including Structure from Motion (SfM), Multi-View Stereo (MVS), Photometric Stereo, and recent neural rendering approaches such as Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS), while critically evaluating their performance under varying illumination conditions. It examines how lighting-induced artifacts such as shadows, reflections, and exposure imbalances compromise reconstruction quality, and outlines practical recommendations and open research directions for illumination-robust 3D reconstruction.
+
+## 3D Reconstruction in Crime Scenes Investigation: Impacts, Benefits, and Limitations
+
+- Authors: Dimitar Rangelov, Jaap Knotter, Radoslav Miltchev
+- Year: 2024
+- Published in: Intelligent Systems and Applications (IntelliSys 2024), Lecture Notes in Networks and Systems, vol. 1065, pp. 46–64, Springer
+- DOI: https://doi.org/10.1007/978-3-031-66329-1_4
+- URL: https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-in-crime-scenes-investigation/
+- Keywords: 3D reconstruction, crime scene investigation, forensics, digital forensics, photogrammetry, laser scanning, forensic documentation
+
+### Abstract
+
+Crime scene investigations are constantly changing and need innovative technology to increase their efficiency and precision. An example of such a technology is 3D reconstruction, which captures the physical attributes of real-world crime scenes and digitizes them into comprehensive three-dimensional models. This paper evaluates the impacts, benefits, and limitations of 3D reconstruction technologies in crime scene investigation, examining how digitized scenes improve documentation, measurement, analysis, and courtroom presentation, while also discussing practical constraints such as capture conditions, processing requirements, and admissibility considerations. The paper outlines best practices and future directions for integrating 3D reconstruction into forensic workflows.
+
+## Impact of Camera Settings on 3D Reconstruction Quality: Insights from NeRF and Gaussian Splatting
+
+- Authors: Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev
+- Year: 2024
+- Published in: Sensors 24(23), 7594
+- DOI: https://doi.org/10.3390/s24237594
+- URL: https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-camera-settings-on-3d-reconstruction-quality/
+- PDF: https://www.mdpi.com/1424-8220/24/23/7594/pdf
+- Keywords: 3D reconstruction, NeRF, Gaussian Splatting, camera settings, ISO, shutter speed, aperture, crime scene investigation, forensics, neural rendering
+
+### Abstract
+
+This study explores the influence of various camera settings on the quality of 3D reconstructions, particularly in the context of indoor crime scene investigations. Using Neural Radiance Fields (NeRF) and Gaussian Splatting for 3D reconstruction, the study analyzed the impact of ISO, shutter speed, and aperture settings on the quality of the resulting 3D models. Through experiments in a mock crime scene environment, the camera configurations that produce the most detailed and artifact-free reconstructions were identified. The findings indicate that an ISO of 200, a shutter speed of 1/60 s, and an aperture of f/3.5 provide the best balance for high-quality 3D reconstructions, minimizing noise, motion blur, and depth-of-field artifacts. These insights offer practical guidance for forensic investigators and other practitioners capturing imagery for neural-rendering-based 3D reconstruction.

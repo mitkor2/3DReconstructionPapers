@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Papers</title>
+<style>
+  :root { --bg:#f4f6f8; --fg:#1a1f26; --card:#fff; --border:#d9dee4; --accent:#0b5fa5; --danger:#b3261e; --muted:#5b6470; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#11151a; --fg:#e6e9ed; --card:#1a2027; --border:#2b333d; --accent:#6ab0e8; --danger:#ff6b61; --muted:#9aa4b0; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--fg); font-size:16px; line-height:1.5; }
+  .wrap { max-width: 50rem; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+  h1 { font-size: 1.4rem; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.25rem; margin-bottom:1.25rem; }
+  label { display:block; font-weight:600; font-size:0.88rem; margin:0.9rem 0 0.25rem; }
+  label .hint { font-weight:400; color:var(--muted); }
+  input[type=text], input[type=password], input[type=number], input[type=date], input[type=url], textarea {
+    width:100%; padding:0.5rem 0.65rem; border:1px solid var(--border); border-radius:7px; background:var(--bg); color:var(--fg); font:inherit;
+  }
+  textarea { min-height: 9rem; resize: vertical; }
+  button { font:inherit; font-weight:600; border:none; border-radius:7px; padding:0.5rem 1rem; cursor:pointer; background:var(--accent); color:#fff; }
+  button.secondary { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  button.danger { background:transparent; color:var(--danger); border:1px solid var(--danger); }
+  button:disabled { opacity:0.5; cursor:default; }
+  .row { display:flex; gap:0.75rem; flex-wrap:wrap; }
+  .row > div { flex:1; min-width: 10rem; }
+  .paper-item { display:flex; align-items:center; gap:0.75rem; padding:0.6rem 0; border-bottom:1px solid var(--border); }
+  .paper-item:last-child { border-bottom:none; }
+  .paper-item .t { flex:1; }
+  .paper-item .y { color:var(--muted); font-size:0.88rem; }
+  #status { position:fixed; bottom:1rem; left:50%; transform:translateX(-50%); background:var(--fg); color:var(--bg); padding:0.5rem 1.1rem; border-radius:8px; font-size:0.9rem; display:none; max-width: 90vw; }
+  .small { font-size:0.85rem; color:var(--muted); }
+  .actions { display:flex; gap:0.6rem; margin-top:1.25rem; flex-wrap:wrap; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📄 Papers admin</h1>
+
+  <!-- LOGIN -->
+  <div class="card" id="login-view">
+    <p>Sign in with a <strong>GitHub fine-grained personal access token</strong> that has
+    <em>Contents: Read &amp; write</em> permission on this repository.
+    <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create one here</a>.</p>
+    <label for="token">Access token</label>
+    <input type="password" id="token" autocomplete="current-password" placeholder="github_pat_…">
+    <label style="font-weight:400"><input type="checkbox" id="remember"> Remember on this device</label>
+    <div class="actions"><button id="login-btn">Sign in</button></div>
+  </div>
+
+  <!-- LIST -->
+  <div class="card" id="list-view" hidden>
+    <div class="row" style="align-items:center">
+      <div><strong>Your papers</strong></div>
+      <div style="flex:0; display:flex; gap:0.6rem">
+        <button id="new-btn">＋ New paper</button>
+        <button class="secondary" id="logout-btn">Sign out</button>
+      </div>
+    </div>
+    <div id="paper-list"></div>
+    <p class="small">Saving commits to the repository; the site rebuilds and goes live automatically in ~1 minute.</p>
+  </div>
+
+  <!-- EDITOR -->
+  <div class="card" id="edit-view" hidden>
+    <strong id="edit-title">New paper</strong>
+    <label for="f-title">Title *</label>
+    <input type="text" id="f-title" required>
+    <label for="f-slug">URL slug <span class="hint">(auto-generated; part of the page address)</span></label>
+    <input type="text" id="f-slug" pattern="[a-z0-9-]+">
+    <label for="f-authors">Authors * <span class="hint">(comma-separated, e.g. “Jane Doe, John Smith”)</span></label>
+    <input type="text" id="f-authors" required>
+    <div class="row">
+      <div>
+        <label for="f-year">Year *</label>
+        <input type="number" id="f-year" min="1900" max="2100" required>
+      </div>
+      <div>
+        <label for="f-published">Exact publication date <span class="hint">(optional)</span></label>
+        <input type="date" id="f-published">
+      </div>
+    </div>
+    <label for="f-venue">Journal / conference <span class="hint">(e.g. “Sensors 24(3)”)</span></label>
+    <input type="text" id="f-venue">
+    <div class="row">
+      <div>
+        <label for="f-doi">DOI <span class="hint">(e.g. 10.3390/s24030912)</span></label>
+        <input type="text" id="f-doi">
+      </div>
+      <div>
+        <label for="f-url">Publisher URL <span class="hint">(optional)</span></label>
+        <input type="url" id="f-url">
+      </div>
+    </div>
+    <label for="f-keywords">Keywords * <span class="hint">(comma-separated)</span></label>
+    <input type="text" id="f-keywords" required>
+    <label for="f-abstract">Abstract *</label>
+    <textarea id="f-abstract" required></textarea>
+    <label for="f-pdf">PDF file <span class="hint">(optional — uploaded to this site; only upload PDFs you have the right to share)</span></label>
+    <input type="file" id="f-pdf" accept="application/pdf">
+    <p class="small" id="f-pdf-current"></p>
+    <div class="actions">
+      <button id="save-btn">Save &amp; publish</button>
+      <button class="secondary" id="cancel-btn">Cancel</button>
+      <button class="danger" id="delete-btn" hidden>Delete paper</button>
+    </div>
+  </div>
+
+  <p class="small"><a id="site-link" href="../">← Back to site</a></p>
+</div>
+<div id="status"></div>
+
+<script>
+window.ADMIN_CONFIG = {"owner":"mitkor2","repo":"3DReconstructionPapers","siteUrl":"https://mitkor2.github.io/3DReconstructionPapers","basePath":"/3DReconstructionPapers","branch":"main"};
+(function () {
+  "use strict";
+  const C = window.ADMIN_CONFIG;
+  const API = "https://api.github.com";
+  const DATA_DIR = "data/papers";
+  const state = { token: null, branch: null, papers: [], editing: null };
+
+  const $ = (id) => document.getElementById(id);
+  const views = ["login-view", "list-view", "edit-view"];
+  function show(view) { views.forEach((v) => $(v).hidden = v !== view); $("login-view").style.display = view === "login-view" ? "" : "none"; }
+
+  let statusTimer;
+  function status(msg, sticky) {
+    const el = $("status");
+    el.textContent = msg;
+    el.style.display = "block";
+    clearTimeout(statusTimer);
+    if (!sticky) statusTimer = setTimeout(() => (el.style.display = "none"), 4000);
+  }
+
+  async function gh(path, opts = {}) {
+    const res = await fetch(API + path, {
+      ...opts,
+      headers: {
+        "Authorization": "Bearer " + state.token,
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        ...(opts.headers || {}),
+      },
+    });
+    if (!res.ok && res.status !== 404) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.message || ("GitHub API error " + res.status));
+    }
+    return res;
+  }
+
+  function b64encodeText(str) {
+    const bytes = new TextEncoder().encode(str);
+    let bin = "";
+    for (const b of bytes) bin += String.fromCharCode(b);
+    return btoa(bin);
+  }
+  function b64decodeText(b64) {
+    const bin = atob(b64.replace(/\n/g, ""));
+    const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(",")[1]);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
+
+  function slugify(s) {
+    return s.toLowerCase()
+      .normalize("NFKD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")
+      .slice(0, 80);
+  }
+
+  async function getSha(path) {
+    const res = await gh(`/repos/${C.owner}/${C.repo}/contents/${path}?ref=${state.branch}`);
+    if (res.status === 404) return null;
+    return (await res.json()).sha;
+  }
+
+  async function putFile(path, base64Content, message) {
+    const sha = await getSha(path);
+    const body = { message, content: base64Content, branch: state.branch };
+    if (sha) body.sha = sha;
+    const res = await gh(`/repos/${C.owner}/${C.repo}/contents/${path}`, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    });
+    if (res.status === 404) throw new Error("Not found writing " + path + " — check token permissions.");
+  }
+
+  async function deleteFile(path, message) {
+    const sha = await getSha(path);
+    if (!sha) return;
+    await gh(`/repos/${C.owner}/${C.repo}/contents/${path}`, {
+      method: "DELETE",
+      body: JSON.stringify({ message, sha, branch: state.branch }),
+    });
+  }
+
+  /* ---------- auth ---------- */
+  async function login(token) {
+    state.token = token;
+    const res = await gh(`/repos/${C.owner}/${C.repo}`);
+    if (res.status === 404) throw new Error("Repository not accessible with this token.");
+    // Commit to the configured content branch (the deploy workflow builds from
+    // it); fall back to the repo default branch if not configured.
+    state.branch = C.branch || (await res.json()).default_branch;
+    await loadPapers();
+    show("list-view");
+  }
+
+  /* ---------- papers ---------- */
+  async function loadPapers() {
+    status("Loading papers…", true);
+    const res = await gh(`/repos/${C.owner}/${C.repo}/contents/${DATA_DIR}?ref=${state.branch}`);
+    state.papers = [];
+    if (res.status !== 404) {
+      const files = (await res.json()).filter((f) => f.name.endsWith(".json"));
+      for (const f of files) {
+        const fr = await gh(`/repos/${C.owner}/${C.repo}/contents/${DATA_DIR}/${f.name}?ref=${state.branch}`);
+        const data = await fr.json();
+        const paper = JSON.parse(b64decodeText(data.content));
+        paper.slug = paper.slug || f.name.replace(/\.json$/, "");
+        state.papers.push(paper);
+      }
+    }
+    state.papers.sort((a, b) => (b.year || 0) - (a.year || 0));
+    renderList();
+    status("Loaded " + state.papers.length + " paper(s).");
+  }
+
+  function renderList() {
+    const el = $("paper-list");
+    el.innerHTML = "";
+    if (!state.papers.length) {
+      el.innerHTML = '<p class="small">No papers yet — add your first one.</p>';
+      return;
+    }
+    for (const p of state.papers) {
+      const div = document.createElement("div");
+      div.className = "paper-item";
+      const t = document.createElement("div");
+      t.className = "t";
+      t.textContent = p.title;
+      const y = document.createElement("span");
+      y.className = "y";
+      y.textContent = p.year || "";
+      const btn = document.createElement("button");
+      btn.className = "secondary";
+      btn.textContent = "Edit";
+      btn.onclick = () => openEditor(p);
+      div.append(t, y, btn);
+      el.appendChild(div);
+    }
+  }
+
+  /* ---------- editor ---------- */
+  function openEditor(paper) {
+    state.editing = paper || null;
+    $("edit-title").textContent = paper ? "Edit paper" : "New paper";
+    $("f-title").value = paper?.title || "";
+    $("f-slug").value = paper?.slug || "";
+    $("f-slug").disabled = !!paper;
+    $("f-authors").value = (paper?.authors || []).join(", ");
+    $("f-year").value = paper?.year || new Date().getFullYear();
+    $("f-published").value = paper?.published || "";
+    $("f-venue").value = paper?.venue || "";
+    $("f-doi").value = paper?.doi || "";
+    $("f-url").value = paper?.url || "";
+    $("f-keywords").value = (paper?.keywords || []).join(", ");
+    $("f-abstract").value = paper?.abstract || "";
+    $("f-pdf").value = "";
+    $("f-pdf-current").textContent = paper?.pdf ? "Current PDF: " + paper.pdf : "";
+    $("delete-btn").hidden = !paper;
+    show("edit-view");
+    window.scrollTo(0, 0);
+  }
+
+  async function save() {
+    const title = $("f-title").value.trim();
+    const authors = $("f-authors").value.split(",").map((s) => s.trim()).filter(Boolean);
+    const abstract = $("f-abstract").value.trim();
+    const keywords = $("f-keywords").value.split(",").map((s) => s.trim()).filter(Boolean);
+    const year = parseInt($("f-year").value, 10);
+    if (!title || !authors.length || !abstract || !keywords.length || !year) {
+      status("Please fill in title, authors, year, keywords and abstract.");
+      return;
+    }
+    const slug = state.editing ? state.editing.slug : (slugify($("f-slug").value.trim()) || slugify(title));
+    if (!slug) { status("Could not generate a URL slug — please enter one."); return; }
+    if (!state.editing && state.papers.some((p) => p.slug === slug)) {
+      status("A paper with this slug already exists — choose another slug.");
+      return;
+    }
+
+    const paper = {
+      slug, title, authors, year,
+      published: $("f-published").value || undefined,
+      venue: $("f-venue").value.trim() || undefined,
+      doi: $("f-doi").value.trim() || undefined,
+      url: $("f-url").value.trim() || undefined,
+      keywords, abstract,
+      pdf: state.editing?.pdf || undefined,
+    };
+
+    $("save-btn").disabled = true;
+    try {
+      const pdfFile = $("f-pdf").files[0];
+      if (pdfFile) {
+        status("Uploading PDF…", true);
+        const pdfPath = `pdfs/${slug}.pdf`;
+        await putFile(pdfPath, await fileToBase64(pdfFile), `Upload PDF: ${title}`);
+        paper.pdf = pdfPath;
+      }
+      status("Saving paper…", true);
+      Object.keys(paper).forEach((k) => paper[k] === undefined && delete paper[k]);
+      await putFile(`${DATA_DIR}/${slug}.json`, b64encodeText(JSON.stringify(paper, null, 2) + "\n"),
+        (state.editing ? "Update paper: " : "Add paper: ") + title);
+      await loadPapers();
+      show("list-view");
+      status("Saved! The site is rebuilding and will be live in about a minute.");
+    } catch (e) {
+      status("Error: " + e.message);
+    } finally {
+      $("save-btn").disabled = false;
+    }
+  }
+
+  async function removePaper() {
+    const p = state.editing;
+    if (!p || !confirm(`Delete “${p.title}” from the site? This cannot be undone.`)) return;
+    $("delete-btn").disabled = true;
+    try {
+      status("Deleting…", true);
+      await deleteFile(`${DATA_DIR}/${p.slug}.json`, "Delete paper: " + p.title);
+      if (p.pdf && p.pdf.startsWith("pdfs/")) await deleteFile(p.pdf, "Delete PDF: " + p.title);
+      await loadPapers();
+      show("list-view");
+      status("Deleted. The site is rebuilding.");
+    } catch (e) {
+      status("Error: " + e.message);
+    } finally {
+      $("delete-btn").disabled = false;
+    }
+  }
+
+  /* ---------- wire up ---------- */
+  $("login-btn").onclick = async () => {
+    const token = $("token").value.trim();
+    if (!token) return;
+    $("login-btn").disabled = true;
+    try {
+      await login(token);
+      if ($("remember").checked) localStorage.setItem("gh_token", token);
+      else sessionStorage.setItem("gh_token", token);
+    } catch (e) {
+      status("Sign-in failed: " + e.message);
+    } finally {
+      $("login-btn").disabled = false;
+    }
+  };
+  $("logout-btn").onclick = () => {
+    localStorage.removeItem("gh_token");
+    sessionStorage.removeItem("gh_token");
+    state.token = null;
+    show("login-view");
+  };
+  $("new-btn").onclick = () => openEditor(null);
+  $("cancel-btn").onclick = () => show("list-view");
+  $("save-btn").onclick = save;
+  $("delete-btn").onclick = removePaper;
+  $("f-title").addEventListener("input", () => {
+    if (!state.editing) $("f-slug").value = slugify($("f-title").value);
+  });
+  $("token").addEventListener("keydown", (e) => { if (e.key === "Enter") $("login-btn").click(); });
+
+  const saved = sessionStorage.getItem("gh_token") || localStorage.getItem("gh_token");
+  if (saved) {
+    $("token").value = saved;
+    login(saved).catch((e) => { status("Auto sign-in failed: " + e.message); show("login-view"); });
+  } else {
+    show("login-view");
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# All crawlers — including AI/LLM crawlers — are welcome.
+User-agent: *
+Allow: /
+Disallow: /3DReconstructionPapers/admin/
+
+Sitemap: https://mitkor2.github.io/3DReconstructionPapers/sitemap.xml

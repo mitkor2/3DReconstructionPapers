@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg — 3D Reconstruction Research Papers</title>
+<meta name="description" content="This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected…">
+<link rel="canonical" href="https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/">
+<meta name="author" content="Dimitar Rangelov">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="theme-color" content="#0c2340">
+<link rel="alternate" type="application/atom+xml" title="3D Reconstruction Research Papers" href="https://mitkor2.github.io/3DReconstructionPapers/feed.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%84%3C/text%3E%3C/svg%3E">
+<style>:root {
+  --bg: #f7f9fb;
+  --fg: #16202b;
+  --muted: #5b6673;
+  --accent: #0b5fa5;
+  --accent-2: #0e7490;
+  --card: #ffffff;
+  --border: #dfe5ec;
+  --tag-bg: #e8f1f9;
+  --tag-fg: #0b5fa5;
+  --hero-bg: linear-gradient(135deg, #0c2340 0%, #14406e 55%, #0e5e8a 100%);
+  --hero-fg: #f2f7fc;
+  --shadow: 0 1px 2px rgba(13, 33, 56, 0.06), 0 4px 14px rgba(13, 33, 56, 0.07);
+  --shadow-lg: 0 2px 4px rgba(13, 33, 56, 0.08), 0 10px 28px rgba(13, 33, 56, 0.13);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1318;
+    --fg: #e7ebef;
+    --muted: #9aa6b2;
+    --accent: #6fb4e8;
+    --accent-2: #67c5d8;
+    --card: #161d25;
+    --border: #283340;
+    --tag-bg: #1d2c3b;
+    --tag-fg: #8fc4ec;
+    --hero-bg: linear-gradient(135deg, #0a1828 0%, #102e4e 55%, #0c4364 100%);
+    --hero-fg: #eaf2f9;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.35), 0 10px 28px rgba(0, 0, 0, 0.5);
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 47rem;
+  margin: 0 auto;
+  padding: 0 1.35rem;
+}
+
+a { color: var(--accent); text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  background: var(--card);
+  padding: 0.5rem 1rem;
+  z-index: 10;
+}
+.skip-link:focus { left: 0.5rem; top: 0.5rem; }
+
+/* ---------- header (inner pages) ---------- */
+.site-header {
+  background: var(--hero-bg);
+  padding: 0.9rem 0;
+  margin-bottom: 2.25rem;
+}
+.site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.site-name {
+  font-weight: 750;
+  font-size: 1.02rem;
+  text-decoration: none;
+  color: var(--hero-fg);
+  letter-spacing: 0.01em;
+}
+.site-name:hover { text-decoration: underline; }
+
+/* ---------- hero (home) ---------- */
+.hero {
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  padding: 3.25rem 0 2.75rem;
+  margin-bottom: 2.5rem;
+}
+.hero .id-row { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.1rem; }
+.hero .monogram {
+  width: 64px; height: 64px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 1.45rem; letter-spacing: 0.03em;
+}
+.hero h1 { font-size: clamp(1.7rem, 4.5vw, 2.3rem); line-height: 1.15; margin: 0; letter-spacing: -0.015em; }
+.hero .role { margin: 0.2rem 0 0; opacity: 0.85; font-size: 0.98rem; }
+.hero .tagline { max-width: 38rem; margin: 0.4rem 0 1.4rem; opacity: 0.94; font-size: 1.04rem; }
+.hero-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hero-links a {
+  display: inline-block;
+  color: var(--hero-fg);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.42rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  transition: background 0.15s;
+}
+.hero-links a:hover { background: rgba(255, 255, 255, 0.14); }
+.hero .stats { margin: 1.5rem 0 0; opacity: 0.85; font-size: 0.9rem; letter-spacing: 0.02em; }
+
+/* ---------- topics ---------- */
+.topics { margin: 0 0 2.25rem; }
+.topics h2 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin: 0 0 0.6rem; }
+
+/* ---------- headings / sections ---------- */
+h1 { font-size: 1.7rem; line-height: 1.25; margin: 0 0 0.75rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.2rem; margin: 1.9rem 0 0.6rem; }
+
+.year-heading {
+  font-size: 1.02rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+  margin: 2.4rem 0 1.1rem;
+  letter-spacing: 0.05em;
+}
+.year-heading:first-of-type { margin-top: 0; }
+
+/* ---------- paper cards ---------- */
+.paper-list { list-style: none; padding: 0; margin: 0; }
+.paper-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.15rem 1.35rem 1.05rem;
+  margin-bottom: 1.05rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+.paper-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.paper-card h3 { margin: 0 0 0.35rem; font-size: 1.12rem; line-height: 1.35; }
+.paper-card h3 a { text-decoration: none; color: var(--fg); }
+.paper-card h3 a:hover { color: var(--accent); }
+.paper-card .abstract { margin: 0.55rem 0 0.25rem; font-size: 0.95rem; color: var(--fg); }
+.venue-pill {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--accent-2);
+  background: transparent;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.meta { color: var(--muted); font-size: 0.92rem; margin: 0.2rem 0 0.6rem; }
+
+.keywords { list-style: none; padding: 0; margin: 0.7rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.keywords li {
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  font-size: 0.78rem;
+  font-weight: 550;
+  padding: 0.16rem 0.62rem;
+  border-radius: 999px;
+}
+
+/* ---------- paper page ---------- */
+.breadcrumb { font-size: 0.88rem; color: var(--muted); margin: 0 0 1.3rem; }
+.breadcrumb a { color: var(--muted); }
+.breadcrumb a:hover { color: var(--accent); }
+
+.paper h1 { font-size: clamp(1.45rem, 3.6vw, 1.85rem); }
+.paper .meta { font-size: 0.97rem; }
+.paper .authors { color: var(--fg); }
+
+.links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.2rem 0 1.8rem; }
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 650;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.btn.ghost { background: var(--card); color: var(--accent); border: 1px solid var(--accent); }
+
+.paper section.block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  margin: 1.1rem 0;
+  box-shadow: var(--shadow);
+}
+.paper section.block > h2 { margin: 0 0 0.6rem; font-size: 1.05rem; }
+.paper .abstract { white-space: pre-line; margin: 0; }
+
+.cite-row { display: flex; align-items: flex-start; gap: 0.7rem; flex-wrap: wrap; }
+.citation {
+  flex: 1 1 20rem;
+  margin: 0;
+  background: var(--bg);
+  border-left: 3px solid var(--accent);
+  padding: 0.75rem 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.93rem;
+}
+pre.bibtex {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin: 0.8rem 0 0;
+}
+button.copy {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--accent);
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+}
+button.copy:hover { background: var(--tag-bg); }
+
+.related h2 { font-size: 1.05rem; }
+.related .paper-card { padding: 0.9rem 1.1rem; }
+.related .paper-card h3 { font-size: 1rem; }
+
+.back-link { display: inline-block; margin-top: 1.4rem; font-size: 0.93rem; }
+
+/* ---------- footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 3.5rem;
+  padding: 1.4rem 0 2.2rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
+.site-footer .foot-links { display: flex; flex-wrap: wrap; gap: 0.45rem 1.1rem; margin-top: 0.3rem; }
+
+@media (max-width: 540px) {
+  body { font-size: 16px; }
+  .hero { padding: 2.4rem 0 2.1rem; }
+  .paper-card { padding: 1rem 1.05rem 0.95rem; }
+}
+</style>
+<meta name="keywords" content="UAV, drone, ground-penetrating radar, GPR, remote sensing, historical site detection, WWII, archaeology, non-invasive prospection, subsurface imaging">
+<meta name="citation_title" content="Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg">
+<meta name="citation_author" content="Dimitar Rangelov">
+<meta name="citation_author" content="Tasha Yara Kronshorst">
+<meta name="citation_author" content="Jiri Jonker">
+<meta name="citation_author" content="Kars Waanders">
+<meta name="citation_author" content="Nilay Swarge">
+<meta name="citation_author" content="Evgeni Genchev">
+<meta name="citation_author" content="Sylvia Molthof">
+<meta name="citation_author" content="Louise Lijcklama à Nijeholt">
+<meta name="citation_author" content="Jaap Knotter">
+<meta name="citation_publication_date" content="2025">
+<meta name="citation_journal_title" content="Engineering, Technology &amp; Applied Science Research 15(5), 28208–28218">
+<meta name="citation_doi" content="10.48084/etasr.12914">
+<meta name="citation_abstract_html_url" content="https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/">
+<meta name="citation_language" content="en">
+<meta name="citation_keywords" content="UAV">
+<meta name="citation_keywords" content="drone">
+<meta name="citation_keywords" content="ground-penetrating radar">
+<meta name="citation_keywords" content="GPR">
+<meta name="citation_keywords" content="remote sensing">
+<meta name="citation_keywords" content="historical site detection">
+<meta name="citation_keywords" content="WWII">
+<meta name="citation_keywords" content="archaeology">
+<meta name="citation_keywords" content="non-invasive prospection">
+<meta name="citation_keywords" content="subsurface imaging">
+<meta name="DC.title" content="Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg">
+<meta name="DC.creator" content="Dimitar Rangelov">
+<meta name="DC.creator" content="Tasha Yara Kronshorst">
+<meta name="DC.creator" content="Jiri Jonker">
+<meta name="DC.creator" content="Kars Waanders">
+<meta name="DC.creator" content="Nilay Swarge">
+<meta name="DC.creator" content="Evgeni Genchev">
+<meta name="DC.creator" content="Sylvia Molthof">
+<meta name="DC.creator" content="Louise Lijcklama à Nijeholt">
+<meta name="DC.creator" content="Jaap Knotter">
+<meta name="DC.date" content="2025">
+<meta name="DC.identifier" content="doi:10.48084/etasr.12914">
+<meta name="DC.description" content="This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected World War II (WWII) hiding place near Bornerbroekseweg, the Netherlands. The survey area is an active farmland field with limited surface…">
+<meta name="DC.language" content="en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg">
+<meta property="og:description" content="This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected…">
+<meta property="og:url" content="https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/">
+<meta property="og:site_name" content="3D Reconstruction Research Papers">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg">
+<meta name="twitter:description" content="This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected…">
+<meta property="article:author" content="Dimitar Rangelov">
+<meta property="article:tag" content="UAV">
+<meta property="article:tag" content="drone">
+<meta property="article:tag" content="ground-penetrating radar">
+<meta property="article:tag" content="GPR">
+<meta property="article:tag" content="remote sensing">
+<meta property="article:tag" content="historical site detection">
+<meta property="article:tag" content="WWII">
+<meta property="article:tag" content="archaeology">
+<meta property="article:tag" content="non-invasive prospection">
+<meta property="article:tag" content="subsurface imaging">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg","name":"Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg","abstract":"This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected World War II (WWII) hiding place near Bornerbroekseweg, the Netherlands. The survey area is an active farmland field with limited surface indicators and partially documented historical significance. A total of six UAV flight lines and four ground-based GPR paths were conducted to cover the site. Subsurface anomalies were identified at depths between approximately 0.2 and 1.5 m. Flight 6 revealed a near-surface reflection at 0.2–0.4 m, whereas Flight 4 showed a deeper horizontal anomaly at around 1.2–1.5 m. The integration of UAV and ground-based data enabled full-site coverage and localized resolution, supporting the identification of areas warranting further archaeological investigation. The results demonstrate the applicability of UAV-GPR for non-invasive prospection in rural historical sites with uncertain spatial records and suggest its value for informing targeted excavations.","author":[{"@type":"Person","name":"Dimitar Rangelov","affiliation":{"@type":"Organization","name":"Saxion University of Applied Sciences"},"sameAs":["https://orcid.org/0009-0005-8511-1555","https://www.researchgate.net/profile/Dimitar-Rangelov-2"],"email":"dimitar.rangelov9@gmail.com"},{"@type":"Person","name":"Tasha Yara Kronshorst"},{"@type":"Person","name":"Jiri Jonker"},{"@type":"Person","name":"Kars Waanders"},{"@type":"Person","name":"Nilay Swarge"},{"@type":"Person","name":"Evgeni Genchev"},{"@type":"Person","name":"Sylvia Molthof"},{"@type":"Person","name":"Louise Lijcklama à Nijeholt"},{"@type":"Person","name":"Jaap Knotter"}],"keywords":"UAV, drone, ground-penetrating radar, GPR, remote sensing, historical site detection, WWII, archaeology, non-invasive prospection, subsurface imaging","url":"https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/","mainEntityOfPage":"https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/","inLanguage":"en","datePublished":"2025","isPartOf":{"@type":"Periodical","name":"Engineering, Technology & Applied Science Research 15(5), 28208–28218"},"sameAs":"https://doi.org/10.48084/etasr.12914","identifier":{"@type":"PropertyValue","propertyID":"DOI","value":"10.48084/etasr.12914"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"3D Reconstruction Research Papers","item":"https://mitkor2.github.io/3DReconstructionPapers/"},{"@type":"ListItem","position":2,"name":"Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg","item":"https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/"}]}</script>
+</head>
+<body class="">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="wrap"><a href="/3DReconstructionPapers/" class="site-name">3D Reconstruction Research Papers</a></nav>
+</header>
+
+<main id="main" class="wrap">
+<article class="paper" itemscope itemtype="https://schema.org/ScholarlyArticle">
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/3DReconstructionPapers/">All papers</a> › <span aria-current="page">Exploring the UAV-Based Ground-Penetrating Radar for…</span></nav>
+  <h1 itemprop="headline">Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg</h1>
+  <p class="meta">
+    <span class="authors"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Dimitar Rangelov</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Tasha Yara Kronshorst</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Jiri Jonker</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Kars Waanders</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Nilay Swarge</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Evgeni Genchev</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Sylvia Molthof</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Louise Lijcklama à Nijeholt</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Jaap Knotter</span></span></span>
+     · <time itemprop="datePublished" datetime="2025">2025</time>
+     · <span class="venue">Engineering, Technology &amp; Applied Science Research 15(5), 28208–28218</span>
+  </p>
+  <p class="links">
+    <a class="btn ghost" href="https://doi.org/10.48084/etasr.12914" rel="external">DOI: 10.48084/etasr.12914</a>
+    <a class="btn ghost" href="https://etasr.com/index.php/ETASR/article/view/12914" rel="external">Publisher page</a>
+  </p>
+  <section class="block">
+    <h2>Abstract</h2>
+    <p class="abstract" itemprop="abstract">This study evaluates the potential of Unmanned Aerial Vehicle-based Ground-Penetrating Radar (UAV-GPR) for identifying buried features related to a suspected World War II (WWII) hiding place near Bornerbroekseweg, the Netherlands. The survey area is an active farmland field with limited surface indicators and partially documented historical significance. A total of six UAV flight lines and four ground-based GPR paths were conducted to cover the site. Subsurface anomalies were identified at depths between approximately 0.2 and 1.5 m. Flight 6 revealed a near-surface reflection at 0.2–0.4 m, whereas Flight 4 showed a deeper horizontal anomaly at around 1.2–1.5 m. The integration of UAV and ground-based data enabled full-site coverage and localized resolution, supporting the identification of areas warranting further archaeological investigation. The results demonstrate the applicability of UAV-GPR for non-invasive prospection in rural historical sites with uncertain spatial records and suggest its value for informing targeted excavations.</p>
+  </section>
+  <section class="block">
+    <h2>Keywords</h2>
+    <ul class="keywords"><li itemprop="keywords">UAV</li><li itemprop="keywords">drone</li><li itemprop="keywords">ground-penetrating radar</li><li itemprop="keywords">GPR</li><li itemprop="keywords">remote sensing</li><li itemprop="keywords">historical site detection</li><li itemprop="keywords">WWII</li><li itemprop="keywords">archaeology</li><li itemprop="keywords">non-invasive prospection</li><li itemprop="keywords">subsurface imaging</li></ul>
+  </section>
+  <section class="block">
+    <h2>Cite this paper</h2>
+    <div class="cite-row">
+      <p class="citation" id="cite-text">Dimitar Rangelov, Tasha Yara Kronshorst, Jiri Jonker, Kars Waanders, Nilay Swarge, Evgeni Genchev, Sylvia Molthof, Louise Lijcklama à Nijeholt, Jaap Knotter (2025). Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg. Engineering, Technology &amp; Applied Science Research 15(5), 28208–28218. https://doi.org/10.48084/etasr.12914</p>
+      <button class="copy" type="button" data-copy="cite-text">Copy citation</button>
+    </div>
+    <pre class="bibtex" id="cite-bibtex">@article{rangelov2025exploring,
+  author = {Dimitar Rangelov and Tasha Yara Kronshorst and Jiri Jonker and Kars Waanders and Nilay Swarge and Evgeni Genchev and Sylvia Molthof and Louise Lijcklama à Nijeholt and Jaap Knotter},
+  title = {{Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg}},
+  year = {2025},
+  journal = {Engineering, Technology &amp; Applied Science Research 15(5), 28208–28218},
+  doi = {10.48084/etasr.12914},
+  url = {https://doi.org/10.48084/etasr.12914}
+}</pre>
+    <p style="margin:0.6rem 0 0"><button class="copy" type="button" data-copy="cite-bibtex">Copy BibTeX</button></p>
+  </section>
+  
+  <a class="back-link" href="/3DReconstructionPapers/">← All papers</a>
+</article>
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(document.getElementById(b.dataset.copy).innerText).then(function () {
+      var t = b.textContent; b.textContent = "Copied!";
+      setTimeout(function () { b.textContent = t; }, 1500);
+    });
+  });
+});
+</script>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+  <p>© 2026 Dimitar Rangelov, Saxion University of Applied Sciences.</p>
+  <p class="foot-links">
+    <a href="https://orcid.org/0009-0005-8511-1555" rel="me">ORCID</a>
+    <a href="https://www.researchgate.net/profile/Dimitar-Rangelov-2" rel="me">ResearchGate</a>
+    <a href="/3DReconstructionPapers/feed.xml">Atom feed</a>
+    <a href="https://mitkor2.github.io/3DReconstructionPapers/llms.txt">llms.txt</a>
+    <a href="/3DReconstructionPapers/admin/" rel="nofollow">Admin</a>
+  </p>
+  </div>
+</footer>
+</body>
+</html>

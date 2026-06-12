@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments — 3D Reconstruction Research Papers</title>
+<meta name="description" content="This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor…">
+<link rel="canonical" href="https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/">
+<meta name="author" content="Dimitar Rangelov">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="theme-color" content="#0c2340">
+<link rel="alternate" type="application/atom+xml" title="3D Reconstruction Research Papers" href="https://mitkor2.github.io/3DReconstructionPapers/feed.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%84%3C/text%3E%3C/svg%3E">
+<style>:root {
+  --bg: #f7f9fb;
+  --fg: #16202b;
+  --muted: #5b6673;
+  --accent: #0b5fa5;
+  --accent-2: #0e7490;
+  --card: #ffffff;
+  --border: #dfe5ec;
+  --tag-bg: #e8f1f9;
+  --tag-fg: #0b5fa5;
+  --hero-bg: linear-gradient(135deg, #0c2340 0%, #14406e 55%, #0e5e8a 100%);
+  --hero-fg: #f2f7fc;
+  --shadow: 0 1px 2px rgba(13, 33, 56, 0.06), 0 4px 14px rgba(13, 33, 56, 0.07);
+  --shadow-lg: 0 2px 4px rgba(13, 33, 56, 0.08), 0 10px 28px rgba(13, 33, 56, 0.13);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1318;
+    --fg: #e7ebef;
+    --muted: #9aa6b2;
+    --accent: #6fb4e8;
+    --accent-2: #67c5d8;
+    --card: #161d25;
+    --border: #283340;
+    --tag-bg: #1d2c3b;
+    --tag-fg: #8fc4ec;
+    --hero-bg: linear-gradient(135deg, #0a1828 0%, #102e4e 55%, #0c4364 100%);
+    --hero-fg: #eaf2f9;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.35), 0 10px 28px rgba(0, 0, 0, 0.5);
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 47rem;
+  margin: 0 auto;
+  padding: 0 1.35rem;
+}
+
+a { color: var(--accent); text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  background: var(--card);
+  padding: 0.5rem 1rem;
+  z-index: 10;
+}
+.skip-link:focus { left: 0.5rem; top: 0.5rem; }
+
+/* ---------- header (inner pages) ---------- */
+.site-header {
+  background: var(--hero-bg);
+  padding: 0.9rem 0;
+  margin-bottom: 2.25rem;
+}
+.site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.site-name {
+  font-weight: 750;
+  font-size: 1.02rem;
+  text-decoration: none;
+  color: var(--hero-fg);
+  letter-spacing: 0.01em;
+}
+.site-name:hover { text-decoration: underline; }
+
+/* ---------- hero (home) ---------- */
+.hero {
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  padding: 3.25rem 0 2.75rem;
+  margin-bottom: 2.5rem;
+}
+.hero .id-row { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.1rem; }
+.hero .monogram {
+  width: 64px; height: 64px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 1.45rem; letter-spacing: 0.03em;
+}
+.hero h1 { font-size: clamp(1.7rem, 4.5vw, 2.3rem); line-height: 1.15; margin: 0; letter-spacing: -0.015em; }
+.hero .role { margin: 0.2rem 0 0; opacity: 0.85; font-size: 0.98rem; }
+.hero .tagline { max-width: 38rem; margin: 0.4rem 0 1.4rem; opacity: 0.94; font-size: 1.04rem; }
+.hero-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hero-links a {
+  display: inline-block;
+  color: var(--hero-fg);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.42rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  transition: background 0.15s;
+}
+.hero-links a:hover { background: rgba(255, 255, 255, 0.14); }
+.hero .stats { margin: 1.5rem 0 0; opacity: 0.85; font-size: 0.9rem; letter-spacing: 0.02em; }
+
+/* ---------- topics ---------- */
+.topics { margin: 0 0 2.25rem; }
+.topics h2 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin: 0 0 0.6rem; }
+
+/* ---------- headings / sections ---------- */
+h1 { font-size: 1.7rem; line-height: 1.25; margin: 0 0 0.75rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.2rem; margin: 1.9rem 0 0.6rem; }
+
+.year-heading {
+  font-size: 1.02rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+  margin: 2.4rem 0 1.1rem;
+  letter-spacing: 0.05em;
+}
+.year-heading:first-of-type { margin-top: 0; }
+
+/* ---------- paper cards ---------- */
+.paper-list { list-style: none; padding: 0; margin: 0; }
+.paper-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.15rem 1.35rem 1.05rem;
+  margin-bottom: 1.05rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+.paper-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.paper-card h3 { margin: 0 0 0.35rem; font-size: 1.12rem; line-height: 1.35; }
+.paper-card h3 a { text-decoration: none; color: var(--fg); }
+.paper-card h3 a:hover { color: var(--accent); }
+.paper-card .abstract { margin: 0.55rem 0 0.25rem; font-size: 0.95rem; color: var(--fg); }
+.venue-pill {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--accent-2);
+  background: transparent;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.meta { color: var(--muted); font-size: 0.92rem; margin: 0.2rem 0 0.6rem; }
+
+.keywords { list-style: none; padding: 0; margin: 0.7rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.keywords li {
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  font-size: 0.78rem;
+  font-weight: 550;
+  padding: 0.16rem 0.62rem;
+  border-radius: 999px;
+}
+
+/* ---------- paper page ---------- */
+.breadcrumb { font-size: 0.88rem; color: var(--muted); margin: 0 0 1.3rem; }
+.breadcrumb a { color: var(--muted); }
+.breadcrumb a:hover { color: var(--accent); }
+
+.paper h1 { font-size: clamp(1.45rem, 3.6vw, 1.85rem); }
+.paper .meta { font-size: 0.97rem; }
+.paper .authors { color: var(--fg); }
+
+.links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.2rem 0 1.8rem; }
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 650;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.btn.ghost { background: var(--card); color: var(--accent); border: 1px solid var(--accent); }
+
+.paper section.block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  margin: 1.1rem 0;
+  box-shadow: var(--shadow);
+}
+.paper section.block > h2 { margin: 0 0 0.6rem; font-size: 1.05rem; }
+.paper .abstract { white-space: pre-line; margin: 0; }
+
+.cite-row { display: flex; align-items: flex-start; gap: 0.7rem; flex-wrap: wrap; }
+.citation {
+  flex: 1 1 20rem;
+  margin: 0;
+  background: var(--bg);
+  border-left: 3px solid var(--accent);
+  padding: 0.75rem 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.93rem;
+}
+pre.bibtex {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin: 0.8rem 0 0;
+}
+button.copy {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--accent);
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+}
+button.copy:hover { background: var(--tag-bg); }
+
+.related h2 { font-size: 1.05rem; }
+.related .paper-card { padding: 0.9rem 1.1rem; }
+.related .paper-card h3 { font-size: 1rem; }
+
+.back-link { display: inline-block; margin-top: 1.4rem; font-size: 0.93rem; }
+
+/* ---------- footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 3.5rem;
+  padding: 1.4rem 0 2.2rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
+.site-footer .foot-links { display: flex; flex-wrap: wrap; gap: 0.45rem 1.1rem; margin-top: 0.3rem; }
+
+@media (max-width: 540px) {
+  body { font-size: 16px; }
+  .hero { padding: 2.4rem 0 2.1rem; }
+  .paper-card { padding: 1rem 1.05rem 0.95rem; }
+}
+</style>
+<meta name="keywords" content="3D reconstruction, NeRF, 3D Gaussian Splatting, indoor environments, outdoor environments, novel view synthesis, reconstruction noise, computational efficiency">
+<meta name="citation_title" content="Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments">
+<meta name="citation_author" content="Dimitar Rangelov">
+<meta name="citation_author" content="Sierd Waanders">
+<meta name="citation_author" content="Kars Waanders">
+<meta name="citation_author" content="Evgeni Genchev">
+<meta name="citation_author" content="Maurice van Keulen">
+<meta name="citation_author" content="Radoslav Miltchev">
+<meta name="citation_publication_date" content="2026/04/04">
+<meta name="citation_journal_title" content="Engineering, Technology &amp; Applied Science Research 16(2), 33736–33745">
+<meta name="citation_doi" content="10.48084/etasr.16947">
+<meta name="citation_abstract_html_url" content="https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/">
+<meta name="citation_language" content="en">
+<meta name="citation_keywords" content="3D reconstruction">
+<meta name="citation_keywords" content="NeRF">
+<meta name="citation_keywords" content="3D Gaussian Splatting">
+<meta name="citation_keywords" content="indoor environments">
+<meta name="citation_keywords" content="outdoor environments">
+<meta name="citation_keywords" content="novel view synthesis">
+<meta name="citation_keywords" content="reconstruction noise">
+<meta name="citation_keywords" content="computational efficiency">
+<meta name="DC.title" content="Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments">
+<meta name="DC.creator" content="Dimitar Rangelov">
+<meta name="DC.creator" content="Sierd Waanders">
+<meta name="DC.creator" content="Kars Waanders">
+<meta name="DC.creator" content="Evgeni Genchev">
+<meta name="DC.creator" content="Maurice van Keulen">
+<meta name="DC.creator" content="Radoslav Miltchev">
+<meta name="DC.date" content="2026-04-04">
+<meta name="DC.identifier" content="doi:10.48084/etasr.16947">
+<meta name="DC.description" content="This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor environments. Both algorithms were assessed on consistent datasets captured with a stabilized full-frame camera setup, using reconstruction…">
+<meta name="DC.language" content="en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments">
+<meta property="og:description" content="This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor…">
+<meta property="og:url" content="https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/">
+<meta property="og:site_name" content="3D Reconstruction Research Papers">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments">
+<meta name="twitter:description" content="This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor…">
+<meta property="article:published_time" content="2026-04-04">
+<meta property="article:author" content="Dimitar Rangelov">
+<meta property="article:tag" content="3D reconstruction">
+<meta property="article:tag" content="NeRF">
+<meta property="article:tag" content="3D Gaussian Splatting">
+<meta property="article:tag" content="indoor environments">
+<meta property="article:tag" content="outdoor environments">
+<meta property="article:tag" content="novel view synthesis">
+<meta property="article:tag" content="reconstruction noise">
+<meta property="article:tag" content="computational efficiency">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments","name":"Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments","abstract":"This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor environments. Both algorithms were assessed on consistent datasets captured with a stabilized full-frame camera setup, using reconstruction noise, detail preservation, and processing time as key evaluation criteria. The results reveal that while both approaches generate high-fidelity reconstructions, 3DGS outperforms NeRF in computational efficiency and noise reduction, offering practical guidance for selecting a reconstruction pipeline depending on the scene type and application requirements.","author":[{"@type":"Person","name":"Dimitar Rangelov","affiliation":{"@type":"Organization","name":"Saxion University of Applied Sciences"},"sameAs":["https://orcid.org/0009-0005-8511-1555","https://www.researchgate.net/profile/Dimitar-Rangelov-2"],"email":"dimitar.rangelov9@gmail.com"},{"@type":"Person","name":"Sierd Waanders"},{"@type":"Person","name":"Kars Waanders"},{"@type":"Person","name":"Evgeni Genchev"},{"@type":"Person","name":"Maurice van Keulen"},{"@type":"Person","name":"Radoslav Miltchev"}],"keywords":"3D reconstruction, NeRF, 3D Gaussian Splatting, indoor environments, outdoor environments, novel view synthesis, reconstruction noise, computational efficiency","url":"https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/","mainEntityOfPage":"https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/","inLanguage":"en","datePublished":"2026-04-04","isPartOf":{"@type":"Periodical","name":"Engineering, Technology & Applied Science Research 16(2), 33736–33745"},"sameAs":"https://doi.org/10.48084/etasr.16947","identifier":{"@type":"PropertyValue","propertyID":"DOI","value":"10.48084/etasr.16947"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"3D Reconstruction Research Papers","item":"https://mitkor2.github.io/3DReconstructionPapers/"},{"@type":"ListItem","position":2,"name":"Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments","item":"https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/"}]}</script>
+</head>
+<body class="">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="wrap"><a href="/3DReconstructionPapers/" class="site-name">3D Reconstruction Research Papers</a></nav>
+</header>
+
+<main id="main" class="wrap">
+<article class="paper" itemscope itemtype="https://schema.org/ScholarlyArticle">
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/3DReconstructionPapers/">All papers</a> › <span aria-current="page">Evaluating 3D Reconstruction: A Side-by-Side Comparison of…</span></nav>
+  <h1 itemprop="headline">Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments</h1>
+  <p class="meta">
+    <span class="authors"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Dimitar Rangelov</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Sierd Waanders</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Kars Waanders</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Evgeni Genchev</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Maurice van Keulen</span></span>, <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Radoslav Miltchev</span></span></span>
+     · <time itemprop="datePublished" datetime="2026-04-04">2026</time>
+     · <span class="venue">Engineering, Technology &amp; Applied Science Research 16(2), 33736–33745</span>
+  </p>
+  <p class="links">
+    <a class="btn ghost" href="https://doi.org/10.48084/etasr.16947" rel="external">DOI: 10.48084/etasr.16947</a>
+    <a class="btn ghost" href="https://etasr.com/index.php/ETASR/article/view/16947" rel="external">Publisher page</a>
+  </p>
+  <section class="block">
+    <h2>Abstract</h2>
+    <p class="abstract" itemprop="abstract">This study presents a comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction in indoor and outdoor environments. Both algorithms were assessed on consistent datasets captured with a stabilized full-frame camera setup, using reconstruction noise, detail preservation, and processing time as key evaluation criteria. The results reveal that while both approaches generate high-fidelity reconstructions, 3DGS outperforms NeRF in computational efficiency and noise reduction, offering practical guidance for selecting a reconstruction pipeline depending on the scene type and application requirements.</p>
+  </section>
+  <section class="block">
+    <h2>Keywords</h2>
+    <ul class="keywords"><li itemprop="keywords">3D reconstruction</li><li itemprop="keywords">NeRF</li><li itemprop="keywords">3D Gaussian Splatting</li><li itemprop="keywords">indoor environments</li><li itemprop="keywords">outdoor environments</li><li itemprop="keywords">novel view synthesis</li><li itemprop="keywords">reconstruction noise</li><li itemprop="keywords">computational efficiency</li></ul>
+  </section>
+  <section class="block">
+    <h2>Cite this paper</h2>
+    <div class="cite-row">
+      <p class="citation" id="cite-text">Dimitar Rangelov, Sierd Waanders, Kars Waanders, Evgeni Genchev, Maurice van Keulen, Radoslav Miltchev (2026). Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments. Engineering, Technology &amp; Applied Science Research 16(2), 33736–33745. https://doi.org/10.48084/etasr.16947</p>
+      <button class="copy" type="button" data-copy="cite-text">Copy citation</button>
+    </div>
+    <pre class="bibtex" id="cite-bibtex">@article{rangelov2026evaluating,
+  author = {Dimitar Rangelov and Sierd Waanders and Kars Waanders and Evgeni Genchev and Maurice van Keulen and Radoslav Miltchev},
+  title = {{Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments}},
+  year = {2026},
+  journal = {Engineering, Technology &amp; Applied Science Research 16(2), 33736–33745},
+  doi = {10.48084/etasr.16947},
+  url = {https://doi.org/10.48084/etasr.16947}
+}</pre>
+    <p style="margin:0.6rem 0 0"><button class="copy" type="button" data-copy="cite-bibtex">Copy BibTeX</button></p>
+  </section>
+  
+  <section class="related" aria-label="Related papers">
+    <h2>Related papers</h2>
+    <ul class="paper-list">
+      <li class="paper-card">
+        <h3><a href="/3DReconstructionPapers/papers/nerf-vs-gaussian-splatting-various-filming-techniques/">Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques</a></h3>
+        <p class="meta">Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev · 2025 · Preprints.org (preprint)</p>
+      </li>
+      <li class="paper-card">
+        <h3><a href="/3DReconstructionPapers/papers/impact-of-data-capture-methods-on-3d-reconstruction-with-gaussian-splatting/">Impact of Data Capture Methods on 3D Reconstruction with Gaussian Splatting</a></h3>
+        <p class="meta">Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev · 2025 · Journal of Imaging 11(2), 65</p>
+      </li>
+      <li class="paper-card">
+        <h3><a href="/3DReconstructionPapers/papers/3d-reconstruction-techniques-lighting-conditions-review/">Three-Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review</a></h3>
+        <p class="meta">Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev · 2025 · Lights 1(1), 1</p>
+      </li>
+    </ul>
+  </section>
+  <a class="back-link" href="/3DReconstructionPapers/">← All papers</a>
+</article>
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(document.getElementById(b.dataset.copy).innerText).then(function () {
+      var t = b.textContent; b.textContent = "Copied!";
+      setTimeout(function () { b.textContent = t; }, 1500);
+    });
+  });
+});
+</script>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+  <p>© 2026 Dimitar Rangelov, Saxion University of Applied Sciences.</p>
+  <p class="foot-links">
+    <a href="https://orcid.org/0009-0005-8511-1555" rel="me">ORCID</a>
+    <a href="https://www.researchgate.net/profile/Dimitar-Rangelov-2" rel="me">ResearchGate</a>
+    <a href="/3DReconstructionPapers/feed.xml">Atom feed</a>
+    <a href="https://mitkor2.github.io/3DReconstructionPapers/llms.txt">llms.txt</a>
+    <a href="/3DReconstructionPapers/admin/" rel="nofollow">Admin</a>
+  </p>
+  </div>
+</footer>
+</body>
+</html>
