@@ -92,7 +92,17 @@ function pubDateSlash(p) {
 
 /* --------------------------------- templates --------------------------------- */
 
-function layout({ title, description, canonical, head = "", body, bodyClass = "" }) {
+const CSS = fs.readFileSync(path.join(ROOT, "assets", "style.css"), "utf8");
+
+function layout({ title, description, canonical, head = "", body, bodyClass = "", showHeader = true, preMain = "" }) {
+  const footLinks = [
+    AUTHOR.orcid && `<a href="${esc(AUTHOR.orcid)}" rel="me">ORCID</a>`,
+    AUTHOR.googleScholar && `<a href="${esc(AUTHOR.googleScholar)}" rel="me">Google Scholar</a>`,
+    AUTHOR.website && `<a href="${esc(AUTHOR.website)}" rel="me">ResearchGate</a>`,
+    `<a href="${esc(href("/feed.xml"))}">Atom feed</a>`,
+    `<a href="${esc(url("/llms.txt"))}">llms.txt</a>`,
+    `<a href="${esc(href("/admin/"))}" rel="nofollow">Admin</a>`,
+  ].filter(Boolean).join("\n    ");
   return `<!doctype html>
 <html lang="${esc(LANG)}">
 <head>
@@ -103,23 +113,28 @@ function layout({ title, description, canonical, head = "", body, bodyClass = ""
 <link rel="canonical" href="${esc(canonical)}">
 <meta name="author" content="${esc(AUTHOR.name || "")}">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="theme-color" content="#0c2340">
 <link rel="alternate" type="application/atom+xml" title="${esc(config.siteTitle)}" href="${esc(url("/feed.xml"))}">
-<link rel="stylesheet" href="${esc(href("/assets/style.css"))}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%84%3C/text%3E%3C/svg%3E">
+<style>${CSS}</style>
 ${head}
 </head>
 <body class="${esc(bodyClass)}">
-<header class="site-header">
-  <nav><a href="${esc(href("/"))}" class="site-name">${esc(config.siteTitle)}</a></nav>
-</header>
-<main>
+<a class="skip-link" href="#main">Skip to content</a>
+${showHeader ? `<header class="site-header">
+  <nav class="wrap"><a href="${esc(href("/"))}" class="site-name">${esc(config.siteTitle)}</a></nav>
+</header>` : ""}
+${preMain}
+<main id="main" class="wrap">
 ${body}
 </main>
 <footer class="site-footer">
-  <p>© ${new Date().getFullYear()} ${esc(AUTHOR.name || "")}.
-  ${AUTHOR.orcid ? `<a href="${esc(AUTHOR.orcid)}" rel="me">ORCID</a> · ` : ""}
-  ${AUTHOR.googleScholar ? `<a href="${esc(AUTHOR.googleScholar)}" rel="me">Google Scholar</a> · ` : ""}
-  <a href="${esc(href("/feed.xml"))}">Feed</a></p>
+  <div class="wrap">
+  <p>© ${new Date().getFullYear()} ${esc(AUTHOR.name || "")}${AUTHOR.affiliation ? `, ${esc(AUTHOR.affiliation)}` : ""}.</p>
+  <p class="foot-links">
+    ${footLinks}
+  </p>
+  </div>
 </footer>
 </body>
 </html>`;
@@ -131,9 +146,28 @@ function ogTags({ title, description, canonical, type = "website" }) {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:site_name" content="${esc(config.siteTitle)}">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">`;
+}
+
+function bibtex(p) {
+  const lastName = (p.authors[0] || "").trim().split(/\s+/).pop().toLowerCase().replace(/[^a-z]/g, "");
+  const firstWord = (p.title.split(/\s+/).find((w) => w.length > 3) || "paper").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const key = `${lastName}${p.year || ""}${firstWord}`;
+  const isPreprint = /preprint/i.test(p.venue || "");
+  const isConf = /conference|proceedings|intellisys|lecture notes|symposium|workshop/i.test(p.venue || "");
+  const type = isPreprint ? "misc" : isConf ? "inproceedings" : "article";
+  const fields = [
+    ["author", p.authors.join(" and ")],
+    ["title", `{${p.title}}`],
+    ["year", String(p.year || "")],
+    [isConf ? "booktitle" : isPreprint ? "howpublished" : "journal", p.venue || ""],
+    ["doi", p.doi || ""],
+    ["url", p.doi ? `https://doi.org/${p.doi}` : url(paperPath(p))],
+  ].filter(([, v]) => v);
+  return `@${type}{${key},\n${fields.map(([k, v]) => `  ${k} = {${v}}`).join(",\n")}\n}`;
 }
 
 function jsonLd(obj) {
@@ -206,6 +240,17 @@ function citationMeta(p) {
   return tags.join("\n");
 }
 
+function relatedPapers(p, count = 3) {
+  const mine = new Set(p.keywords.map((k) => k.toLowerCase()));
+  return papers
+    .filter((o) => o.slug !== p.slug)
+    .map((o) => ({ o, score: o.keywords.reduce((n, k) => n + (mine.has(k.toLowerCase()) ? 1 : 0), 0) }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score || (b.o.year || 0) - (a.o.year || 0))
+    .slice(0, count)
+    .map(({ o }) => o);
+}
+
 function paperPage(p) {
   const canonical = url(paperPath(p));
   const description = truncate(p.abstract, 160);
@@ -214,8 +259,8 @@ function paperPage(p) {
 
   const links = [
     pdf && `<a class="btn" href="${esc(pdf)}">Full text (PDF)</a>`,
-    doiUrl && `<a class="btn" href="${esc(doiUrl)}" rel="external">DOI: ${esc(p.doi)}</a>`,
-    p.url && p.url !== doiUrl && `<a class="btn" href="${esc(p.url)}" rel="external">Publisher page</a>`,
+    doiUrl && `<a class="btn ghost" href="${esc(doiUrl)}" rel="external">DOI: ${esc(p.doi)}</a>`,
+    p.url && p.url !== doiUrl && `<a class="btn ghost" href="${esc(p.url)}" rel="external">Publisher page</a>`,
   ].filter(Boolean).join("\n    ");
 
   const citation = `${p.authors.join(", ")} (${p.year}). ${p.title}.${p.venue ? ` ${p.venue}.` : ""}${p.doi ? ` https://doi.org/${p.doi}` : ""}`;
@@ -233,11 +278,27 @@ function paperPage(p) {
     `<meta name="keywords" content="${esc(p.keywords.join(", "))}">`,
     citationMeta(p),
     ogTags({ title: p.title, description, canonical, type: "article" }),
+    p.published ? `<meta property="article:published_time" content="${esc(p.published)}">` : "",
+    `<meta property="article:author" content="${esc(p.authors[0] || "")}">`,
+    ...p.keywords.map((k) => `<meta property="article:tag" content="${esc(k)}">`),
     jsonLd(paperLd(p)),
     jsonLd(breadcrumbLd),
-  ].join("\n");
+  ].filter(Boolean).join("\n");
+
+  const related = relatedPapers(p);
+  const relatedHtml = related.length ? `
+  <section class="related" aria-label="Related papers">
+    <h2>Related papers</h2>
+    <ul class="paper-list">
+      ${related.map((o) => `<li class="paper-card">
+        <h3><a href="${esc(href(paperPath(o)))}">${esc(o.title)}</a></h3>
+        <p class="meta">${esc(o.authors.join(", "))}${o.year ? ` · ${esc(String(o.year))}` : ""}${o.venue ? ` · ${esc(o.venue)}` : ""}</p>
+      </li>`).join("\n      ")}
+    </ul>
+  </section>` : "";
 
   const body = `<article class="paper" itemscope itemtype="https://schema.org/ScholarlyArticle">
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="${esc(href("/"))}">All papers</a> › <span aria-current="page">${esc(truncate(p.title, 60))}</span></nav>
   <h1 itemprop="headline">${esc(p.title)}</h1>
   <p class="meta">
     <span class="authors">${p.authors.map((a) => `<span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">${esc(a)}</span></span>`).join(", ")}</span>
@@ -245,20 +306,36 @@ function paperPage(p) {
     ${p.venue ? ` · <span class="venue">${esc(p.venue)}</span>` : ""}
   </p>
   ${links ? `<p class="links">\n    ${links}\n  </p>` : ""}
-  <section>
+  <section class="block">
     <h2>Abstract</h2>
     <p class="abstract" itemprop="abstract">${esc(p.abstract)}</p>
   </section>
-  ${p.keywords.length ? `<section>
+  ${p.keywords.length ? `<section class="block">
     <h2>Keywords</h2>
     <ul class="keywords">${p.keywords.map((k) => `<li itemprop="keywords">${esc(k)}</li>`).join("")}</ul>
   </section>` : ""}
-  <section>
+  <section class="block">
     <h2>Cite this paper</h2>
-    <p class="citation">${esc(citation)}</p>
+    <div class="cite-row">
+      <p class="citation" id="cite-text">${esc(citation)}</p>
+      <button class="copy" type="button" data-copy="cite-text">Copy citation</button>
+    </div>
+    <pre class="bibtex" id="cite-bibtex">${esc(bibtex(p))}</pre>
+    <p style="margin:0.6rem 0 0"><button class="copy" type="button" data-copy="cite-bibtex">Copy BibTeX</button></p>
   </section>
-  <p><a href="${esc(href("/"))}">← All papers</a></p>
-</article>`;
+  ${relatedHtml}
+  <a class="back-link" href="${esc(href("/"))}">← All papers</a>
+</article>
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(document.getElementById(b.dataset.copy).innerText).then(function () {
+      var t = b.textContent; b.textContent = "Copied!";
+      setTimeout(function () { b.textContent = t; }, 1500);
+    });
+  });
+});
+</script>`;
 
   return layout({ title: `${p.title} — ${config.siteTitle}`, description, canonical, head, body });
 }
@@ -295,26 +372,67 @@ function indexPage() {
     jsonLd(listLd),
   ].join("\n");
 
-  const items = papers.map((p) => `
-  <li class="paper-card">
-    <h2><a href="${esc(href(paperPath(p)))}">${esc(p.title)}</a></h2>
-    <p class="meta">${esc(p.authors.join(", "))}${p.year ? ` · ${esc(String(p.year))}` : ""}${p.venue ? ` · ${esc(p.venue)}` : ""}</p>
-    <p class="abstract">${esc(truncate(p.abstract, 280))}</p>
-    ${p.keywords.length ? `<ul class="keywords">${p.keywords.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>` : ""}
-  </li>`).join("\n");
+  // Top keywords across all papers (research topics)
+  const kwCounts = new Map();
+  for (const p of papers) for (const k of p.keywords) {
+    const key = k.toLowerCase();
+    kwCounts.set(key, { name: kwCounts.get(key)?.name || k, n: (kwCounts.get(key)?.n || 0) + 1 });
+  }
+  const topics = [...kwCounts.values()].sort((a, b) => b.n - a.n).slice(0, 12).map((t) => t.name);
 
-  const body = `<section class="intro">
-  <h1>${esc(config.siteTitle)}</h1>
-  <p>${esc(config.description)}</p>
-  <p class="byline">by <strong>${esc(AUTHOR.name || "")}</strong>${AUTHOR.affiliation ? `, ${esc(AUTHOR.affiliation)}` : ""}${AUTHOR.orcid ? ` · <a href="${esc(AUTHOR.orcid)}" rel="me">ORCID</a>` : ""}${AUTHOR.googleScholar ? ` · <a href="${esc(AUTHOR.googleScholar)}" rel="me">Google Scholar</a>` : ""}</p>
-</section>
+  const years = [...new Set(papers.map((p) => p.year))].sort((a, b) => b - a);
+  const yearMin = Math.min(...papers.map((p) => p.year || 9999));
+  const yearMax = Math.max(...papers.map((p) => p.year || 0));
+
+  const card = (p) => `
+  <li class="paper-card">
+    ${p.venue ? `<span class="venue-pill">${esc(p.venue.split(/[\d(,]/)[0].trim() || p.venue)}</span>` : ""}
+    <h3><a href="${esc(href(paperPath(p)))}">${esc(p.title)}</a></h3>
+    <p class="meta">${esc(p.authors.join(", "))}${p.year ? ` · ${esc(String(p.year))}` : ""}</p>
+    <p class="abstract">${esc(truncate(p.abstract, 260))}</p>
+    ${p.keywords.length ? `<ul class="keywords">${p.keywords.slice(0, 6).map((k) => `<li>${esc(k)}</li>`).join("")}</ul>` : ""}
+  </li>`;
+
+  const sections = years.map((y) => `
+  <h2 class="year-heading" id="y${y}">${y}</h2>
+  <ul class="paper-list">
+${papers.filter((p) => p.year === y).map(card).join("\n")}
+  </ul>`).join("\n");
+
+  const monogram = (AUTHOR.name || "").split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  const heroLinks = [
+    AUTHOR.orcid && `<a href="${esc(AUTHOR.orcid)}" rel="me">ORCID</a>`,
+    AUTHOR.googleScholar && `<a href="${esc(AUTHOR.googleScholar)}" rel="me">Google Scholar</a>`,
+    AUTHOR.website && `<a href="${esc(AUTHOR.website)}" rel="me">ResearchGate</a>`,
+    AUTHOR.email && `<a href="mailto:${esc(AUTHOR.email)}">Email</a>`,
+  ].filter(Boolean).join("\n      ");
+
+  const preMain = `<header class="hero">
+  <div class="wrap">
+    <div class="id-row">
+      <span class="monogram" aria-hidden="true">${esc(monogram)}</span>
+      <div>
+        <h1>${esc(config.siteTitle)}</h1>
+        <p class="role">by ${esc(AUTHOR.name || "")}${AUTHOR.affiliation ? ` · ${esc(AUTHOR.affiliation)}` : ""}</p>
+      </div>
+    </div>
+    <p class="tagline">${esc(config.description)}</p>
+    <nav class="hero-links" aria-label="Profiles">
+      ${heroLinks}
+    </nav>
+    <p class="stats">${papers.length} publication${papers.length === 1 ? "" : "s"} · ${yearMin}–${yearMax}</p>
+  </div>
+</header>`;
+
+  const body = `${topics.length ? `<section class="topics" aria-label="Research topics">
+  <h2>Research topics</h2>
+  <ul class="keywords">${topics.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+</section>` : ""}
 <section aria-label="Publications">
-  <ol class="paper-list" reversed>
-${items}
-  </ol>
+${sections}
 </section>`;
 
-  return layout({ title: config.siteTitle, description, canonical, head, body, bodyClass: "home" });
+  return layout({ title: config.siteTitle, description, canonical, head, body, bodyClass: "home", showHeader: false, preMain });
 }
 
 /* ------------------------------ machine endpoints ----------------------------- */
@@ -458,7 +576,6 @@ write("404.html", layout({
   head: `<meta name="robots" content="noindex">`,
   body: `<h1>Page not found</h1><p><a href="${esc(href("/"))}">← All papers</a></p>`,
 }));
-copyDir("assets", "assets");
-copyDir("pdfs", "pdfs");
+copyDir("pdfs", "pdfs"); // CSS is inlined into every page at build time — no assets dir needed
 
 console.log(`Built ${papers.length} paper page(s) → ${DIST}`);
