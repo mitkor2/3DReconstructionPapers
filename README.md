@@ -4,7 +4,8 @@
 
 [![Website](https://img.shields.io/badge/Website-mitkor2.github.io-0b5fa5)](https://mitkor2.github.io/3DReconstructionPapers/)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0005--8511--1555-a6ce39?logo=orcid&logoColor=white)](https://orcid.org/0009-0005-8511-1555)
-[![Papers](https://img.shields.io/badge/Papers-7-success)]( https://mitkor2.github.io/3DReconstructionPapers/)
+[![Papers](https://img.shields.io/badge/Papers-9-success)]( https://mitkor2.github.io/3DReconstructionPapers/)
+[![Cite](https://img.shields.io/badge/Cite-BibTeX%20%2F%20RIS-orange)](https://mitkor2.github.io/3DReconstructionPapers/citations.bib)
 
 > **Peer‑reviewed research on 3D reconstruction, NeRF (Neural Radiance Fields), 3D Gaussian Splatting, photogrammetry, UAV/drone sensing and forensic crime‑scene investigation — by [Dimitar Rangelov](https://orcid.org/0009-0005-8511-1555), Senior Researcher at Saxion University of Applied Sciences.**
 
@@ -48,6 +49,18 @@ A comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatt
 
 ### 2025
 
+#### [Utilizing JIT Python runtime and parameter optimization for CPU‑based Gaussian Splatting thumbnailer](https://mitkor2.github.io/3DReconstructionPapers/papers/jit-python-cpu-gaussian-splatting-thumbnailer/)
+*Evgeni Genchev, Dimitar Rangelov, Kars Waanders, Sierd Waanders* — **Array 28, 100611 (Elsevier)** — [doi:10.1016/j.array.2025.100611](https://doi.org/10.1016/j.array.2025.100611)
+
+A lightweight CPU‑only thumbnailer for Gaussian Splatting data using Numba JIT compilation in Python — a ~156× speedup over pure Python, producing 720p previews in ~1.8 s for GPU‑less environments such as field forensics and embedded vision.
+`Gaussian Splatting` · `JIT` · `Numba` · `CPU rendering` · `embedded vision`
+
+#### [Emerging Sensing Technologies in Crime Investigation: Applications and Innovations – A Comprehensive Review](https://mitkor2.github.io/3DReconstructionPapers/papers/emerging-sensing-technologies-in-crime-investigation-review/)
+*Dimitar Rangelov, Radoslav Miltchev, Jaap Knotter* — **Conference paper**
+
+A comprehensive review of emerging sensing technologies for crime investigation: 3D reconstruction for virtual scene analysis, electronic noses for drug and explosive detection, thermal imaging, and ground‑penetrating radar — their applications, limitations and integration potential.
+`sensing technologies` · `electronic nose` · `thermal imaging` · `GPR` · `forensics`
+
 #### [Three‑Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review](https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-techniques-lighting-conditions-review/)
 *Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Lights 1(1), 1** — [doi:10.3390/lights1010001](https://doi.org/10.3390/lights1010001)
 
@@ -90,7 +103,7 @@ How ISO, shutter speed and aperture affect NeRF and Gaussian Splatting reconstru
 
 ## 📌 How to cite
 
-Each paper page includes a ready‑to‑copy plain‑text citation **and a BibTeX entry**. Please cite the published version using its DOI. Example:
+Each paper page includes a ready‑to‑copy plain‑text citation, a **BibTeX entry**, and **downloadable `.bib` / `.ris` files** that import directly into **Zotero, Mendeley, EndNote and RefWorks**. You can also grab [**`citations.bib`**](https://mitkor2.github.io/3DReconstructionPapers/citations.bib) — one BibTeX file with every paper — or use GitHub's built‑in **"Cite this repository"** button (powered by [`CITATION.cff`](CITATION.cff)). Please cite the published version using its DOI. Example:
 
 ```bibtex
 @article{rangelov2024impact,

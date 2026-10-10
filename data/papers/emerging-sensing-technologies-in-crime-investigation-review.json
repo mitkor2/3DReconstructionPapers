@@ -1,0 +1,9 @@
+{
+  "slug": "emerging-sensing-technologies-in-crime-investigation-review",
+  "title": "Emerging Sensing Technologies in Crime Investigation: Applications and Innovations – A Comprehensive Review",
+  "authors": ["Dimitar Rangelov", "Radoslav Miltchev", "Jaap Knotter"],
+  "year": 2025,
+  "venue": "Conference paper",
+  "keywords": ["sensing technologies", "crime investigation", "forensics", "3D reconstruction", "electronic nose", "thermal imaging", "ground-penetrating radar", "review", "crime scene investigation"],
+  "abstract": "This comprehensive review examines emerging sensing technologies that are transforming crime investigation, including 3D reconstruction for virtual scene analysis, electronic noses for the detection of drugs and explosives, thermal imaging, and ground-penetrating radar. The review discusses the applications, limitations, and integration potential of these technologies in modern forensic workflows, and outlines directions for their combined deployment in crime scene investigation."
+}

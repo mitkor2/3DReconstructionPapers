@@ -244,6 +244,16 @@ button.copy {
 }
 button.copy:hover { background: var(--tag-bg); }
 
+.cite-downloads {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+}
+.cite-link { font-size: 0.88rem; }
+
 .related h2 { font-size: 1.05rem; }
 .related .paper-card { padding: 0.9rem 1.1rem; }
 .related .paper-card h3 { font-size: 1rem; }
