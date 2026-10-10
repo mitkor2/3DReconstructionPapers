@@ -153,8 +153,13 @@ function ogTags({ title, description, canonical, type = "website" }) {
 <meta name="twitter:description" content="${esc(description)}">`;
 }
 
+function plainCitation(p) {
+  return `${p.authors.join(", ")} (${p.year}). ${p.title}.${p.venue ? ` ${p.venue}.` : ""}${p.doi ? ` https://doi.org/${p.doi}` : ""}`;
+}
+
 function pubType(p) {
   const v = p.venue || "";
+  if (/dissertation|thesis/i.test(v)) return "thesis";
   if (/preprint/i.test(v)) return "preprint";
   if (/conference|proceedings|intellisys|lecture notes|symposium|workshop/i.test(v)) return "conference";
   return "journal";
@@ -164,13 +169,13 @@ function bibtex(p) {
   const lastName = (p.authors[0] || "").trim().split(/\s+/).pop().toLowerCase().replace(/[^a-z]/g, "");
   const firstWord = (p.title.split(/\s+/).find((w) => w.length > 3) || "paper").toLowerCase().replace(/[^a-z0-9]/g, "");
   const key = `${lastName}${p.year || ""}${firstWord}`;
-  const type = { preprint: "misc", conference: "inproceedings", journal: "article" }[pubType(p)];
-  const venueField = { preprint: "howpublished", conference: "booktitle", journal: "journal" }[pubType(p)];
+  const type = { preprint: "misc", conference: "inproceedings", journal: "article", thesis: "phdthesis" }[pubType(p)];
+  const venueField = { preprint: "howpublished", conference: "booktitle", journal: "journal", thesis: "school" }[pubType(p)];
   const fields = [
     ["author", p.authors.join(" and ")],
     ["title", `{${p.title}}`],
     ["year", String(p.year || "")],
-    [venueField, p.venue || ""],
+    [venueField, venueField === "school" ? (p.venue || "").replace(/^PhD dissertation,?\s*/i, "") : p.venue || ""],
     ["doi", p.doi || ""],
     ["url", p.doi ? `https://doi.org/${p.doi}` : url(paperPath(p))],
   ].filter(([, v]) => v);
@@ -179,7 +184,7 @@ function bibtex(p) {
 
 function ris(p) {
   // RIS format — imports directly into Zotero, Mendeley, EndNote, RefWorks.
-  const ty = { journal: "JOUR", conference: "CPAPER", preprint: "UNPB" }[pubType(p)];
+  const ty = { journal: "JOUR", conference: "CPAPER", preprint: "UNPB", thesis: "THES" }[pubType(p)];
   const lines = [`TY  - ${ty}`];
   for (const a of p.authors) {
     const parts = a.trim().split(/\s+/);
@@ -291,7 +296,7 @@ function paperPage(p) {
     p.url && p.url !== doiUrl && `<a class="btn ghost" href="${esc(p.url)}" rel="external">Publisher page</a>`,
   ].filter(Boolean).join("\n    ");
 
-  const citation = `${p.authors.join(", ")} (${p.year}). ${p.title}.${p.venue ? ` ${p.venue}.` : ""}${p.doi ? ` https://doi.org/${p.doi}` : ""}`;
+  const citation = plainCitation(p);
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -420,9 +425,13 @@ function indexPage() {
   <li class="paper-card">
     ${p.venue ? `<span class="venue-pill">${esc(p.venue.split(/[\d(,]/)[0].trim() || p.venue)}</span>` : ""}
     <h3><a href="${esc(href(paperPath(p)))}">${esc(p.title)}</a></h3>
-    <p class="meta">${esc(p.authors.join(", "))}${p.year ? ` · ${esc(String(p.year))}` : ""} · <a class="cite-link" href="${esc(href(paperPath(p)))}#cite">Cite</a></p>
+    <p class="meta">${esc(p.authors.join(", "))}${p.year ? ` · ${esc(String(p.year))}` : ""}</p>
     <p class="abstract">${esc(truncate(p.abstract, 260))}</p>
     ${p.keywords.length ? `<ul class="keywords">${p.keywords.slice(0, 6).map((k) => `<li>${esc(k)}</li>`).join("")}</ul>` : ""}
+    <p class="card-actions">
+      <button class="copy cite-btn" type="button" data-cite="${esc(plainCitation(p))}">📋 Cite</button>
+      <a class="cite-link" href="${esc(href(paperPath(p)))}#cite">BibTeX / RIS</a>
+    </p>
   </li>`;
 
   const sections = years.map((y) => `
@@ -462,7 +471,17 @@ ${papers.filter((p) => p.year === y).map(card).join("\n")}
 </section>` : ""}
 <section aria-label="Publications">
 ${sections}
-</section>`;
+</section>
+<script>
+document.querySelectorAll("[data-cite]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(b.dataset.cite).then(function () {
+      var t = b.textContent; b.textContent = "✓ Copied!";
+      setTimeout(function () { b.textContent = t; }, 1500);
+    });
+  });
+});
+</script>`;
 
   return layout({ title: config.siteTitle, description, canonical, head, body, bodyClass: "home", showHeader: false, preMain });
 }
@@ -563,7 +582,7 @@ function atomFeed() {
   <link href="${esc(url("/"))}"/>
   <link rel="self" href="${esc(url("/feed.xml"))}"/>
   <id>${esc(url("/"))}</id>
-  <updated>${esc(NOW)}</updated>
+  <updated>${esc(NOW.slice(0, 10))}T00:00:00Z</updated>
   <author><name>${esc(AUTHOR.name || "")}</name></author>
 ${entries}
 </feed>
@@ -573,7 +592,9 @@ ${entries}
 /* ------------------------------------ admin ----------------------------------- */
 
 function adminPage() {
-  const template = fs.readFileSync(path.join(ROOT, "admin", "index.html"), "utf8");
+  // template.html is the source; the built admin/index.html may be committed
+  // back to the repo root by the deploy workflow without clobbering it.
+  const template = fs.readFileSync(path.join(ROOT, "admin", "template.html"), "utf8");
   const repoUrl = process.env.GITHUB_REPOSITORY || guessRepoFromUrl();
   const [owner, repo] = repoUrl.split("/");
   const adminConfig = { owner, repo, siteUrl: SITE_URL, basePath: BASE_PATH, branch: "main" };
