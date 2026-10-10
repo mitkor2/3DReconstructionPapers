@@ -1,0 +1,20 @@
+TY  - UNPB
+AU  - Rangelov, Dimitar
+AU  - Waanders, Sierd
+AU  - Waanders, Kars
+AU  - Keulen, Maurice van
+AU  - Miltchev, Radoslav
+TI  - Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques
+T2  - Preprints.org (preprint)
+PY  - 2025
+DO  - 10.20944/preprints202504.1068.v1
+UR  - https://doi.org/10.20944/preprints202504.1068.v1
+AB  - This study presents a side-by-side comparison of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) for 3D reconstruction under various filming techniques. The two approaches were evaluated on footage captured with different camera movements, orientations, and scanning strategies to determine how each filming technique affects reconstruction noise, detail preservation, and overall visual fidelity. The results provide practical recommendations on the filming styles best suited to each reconstruction method, helping practitioners capture footage that maximizes the quality of neural-rendering-based 3D reconstructions.
+KW  - 3D reconstruction
+KW  - NeRF
+KW  - 3D Gaussian Splatting
+KW  - filming techniques
+KW  - video capture
+KW  - reconstruction quality
+KW  - novel view synthesis
+ER  - 

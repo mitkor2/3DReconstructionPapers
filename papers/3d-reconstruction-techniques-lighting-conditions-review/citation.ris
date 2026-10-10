@@ -1,0 +1,24 @@
+TY  - JOUR
+AU  - Rangelov, Dimitar
+AU  - Waanders, Sierd
+AU  - Waanders, Kars
+AU  - Keulen, Maurice van
+AU  - Miltchev, Radoslav
+TI  - Three-Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review
+JO  - Lights 1(1), 1
+PY  - 2025
+DA  - 2025/07/14
+DO  - 10.3390/lights1010001
+UR  - https://doi.org/10.3390/lights1010001
+AB  - 3D reconstruction has become a fundamental technology in applications ranging from cultural heritage preservation and robotics to forensics and virtual reality, yet lighting conditions at capture time remain one of the most influential and widely neglected factors affecting reconstruction quality. This review provides a comprehensive survey of classical and modern 3D reconstruction techniques, including Structure from Motion (SfM), Multi-View Stereo (MVS), Photometric Stereo, and recent neural rendering approaches such as Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS), while critically evaluating their performance under varying illumination conditions. It examines how lighting-induced artifacts such as shadows, reflections, and exposure imbalances compromise reconstruction quality, and outlines practical recommendations and open research directions for illumination-robust 3D reconstruction.
+KW  - 3D reconstruction
+KW  - lighting conditions
+KW  - Structure from Motion
+KW  - Multi-View Stereo
+KW  - Photometric Stereo
+KW  - NeRF
+KW  - Gaussian Splatting
+KW  - neural rendering
+KW  - review
+KW  - illumination
+ER  - 

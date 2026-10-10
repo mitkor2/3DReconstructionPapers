@@ -1,0 +1,23 @@
+TY  - JOUR
+AU  - Genchev, Evgeni
+AU  - Rangelov, Dimitar
+AU  - Waanders, Kars
+AU  - Waanders, Sierd
+TI  - Utilizing JIT Python runtime and parameter optimization for CPU-based Gaussian Splatting thumbnailer
+JO  - Array 28, 100611
+PY  - 2025
+DA  - 2025/11/27
+DO  - 10.1016/j.array.2025.100611
+UR  - https://doi.org/10.1016/j.array.2025.100611
+AB  - This study presents a lightweight, CPU-based method for generating thumbnails from Gaussian Splatting data using the Numba Just-in-Time (JIT) compiler in Python. By simplifying the representation — omitting rotation data and approximating Gaussians as spheres — and optimizing rendering parameters, the approach reduces execution time by roughly 156× compared to pure Python (from 336 s to 2.33 s), producing 720p thumbnails in about 1.8 s with sigma values of 0.4–0.5. The method targets environments where GPU resources are unavailable, such as field forensics and embedded vision systems, making Gaussian Splatting previews practical on commodity CPU hardware.
+KW  - Gaussian Splatting
+KW  - just-in-time compilation
+KW  - Numba
+KW  - Python
+KW  - 3D rendering
+KW  - 3D reconstruction
+KW  - CPU rendering
+KW  - thumbnails
+KW  - performance optimization
+KW  - embedded vision
+ER  - 
