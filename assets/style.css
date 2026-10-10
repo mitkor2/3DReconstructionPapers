@@ -252,7 +252,13 @@ button.copy:hover { background: var(--tag-bg); }
   margin: 0.7rem 0 0;
   font-size: 0.85rem;
 }
-.cite-link { font-size: 0.88rem; }
+.cite-link { font-size: 0.85rem; }
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.75rem 0 0;
+}
 
 .related h2 { font-size: 1.05rem; }
 .related .paper-card { padding: 0.9rem 1.1rem; }

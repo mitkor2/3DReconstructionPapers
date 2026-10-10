@@ -25,9 +25,27 @@ jobs:
       - name: Build site
         run: node scripts/build.js
 
-      # Publish the built site to the branch GitHub Pages currently serves
-      # ("Deploy from a branch" mode). Works without any repo settings change.
-      - name: Publish built site to Pages branch
+      # GitHub Pages is configured in "Deploy from a branch" mode serving
+      # main/(root), so the built site must live in main itself. Copy the
+      # build output to the repo root and commit it when it changed.
+      # "[skip ci]" prevents this commit from re-triggering the workflow.
+      - name: Publish built site into main
+        if: github.actor != 'github-actions[bot]'
+        run: |
+          rsync -a dist/ ./
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Site output unchanged — nothing to publish."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Publish built site [skip ci]"
+            git push origin HEAD:main
+          fi
+
+      # Also keep the former publish branch in sync, in case Pages is ever
+      # pointed back at it.
+      - name: Publish built site to legacy Pages branch
         run: |
           cd dist
           git init -b site

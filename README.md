@@ -4,7 +4,7 @@
 
 [![Website](https://img.shields.io/badge/Website-mitkor2.github.io-0b5fa5)](https://mitkor2.github.io/3DReconstructionPapers/)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0005--8511--1555-a6ce39?logo=orcid&logoColor=white)](https://orcid.org/0009-0005-8511-1555)
-[![Papers](https://img.shields.io/badge/Papers-9-success)]( https://mitkor2.github.io/3DReconstructionPapers/)
+[![Papers](https://img.shields.io/badge/Papers-10-success)]( https://mitkor2.github.io/3DReconstructionPapers/)
 [![Cite](https://img.shields.io/badge/Cite-BibTeX%20%2F%20RIS-orange)](https://mitkor2.github.io/3DReconstructionPapers/citations.bib)
 
 > **Peer‑reviewed research on 3D reconstruction, NeRF (Neural Radiance Fields), 3D Gaussian Splatting, photogrammetry, UAV/drone sensing and forensic crime‑scene investigation — by [Dimitar Rangelov](https://orcid.org/0009-0005-8511-1555), Senior Researcher at Saxion University of Applied Sciences.**
@@ -25,67 +25,191 @@ An open index of Dimitar Rangelov's publications. Every paper has its own page w
 
 ## 📄 Publications
 
-> Newest first. Click any title for the full abstract, keywords, citation and BibTeX.
+> Newest first. Titles link to the official version (DOI); every entry has a copyable BibTeX citation (use the copy icon in the code block) — [`citations.bib`](https://mitkor2.github.io/3DReconstructionPapers/citations.bib) has them all.
 
 ### 2026
 
-#### [Evaluating 3D Reconstruction: A Side‑by‑Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments](https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/)
-*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Evgeni Genchev, Maurice van Keulen, Radoslav Miltchev* — **Engineering, Technology & Applied Science Research 16(2), 33736–33745** — [doi:10.48084/etasr.16947](https://doi.org/10.48084/etasr.16947)
+#### [Enhancing Crime Scene Investigations: From Technology to Evidence](https://research.utwente.nl/en/publications/50afee12-1864-4d2a-ac2e-96638f43ce5d)
+*Dimitar Rangelov* — **PhD dissertation, University of Twente** — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/enhancing-crime-scene-investigations-phd-dissertation/)
 
-A comparative evaluation of Neural Radiance Fields (NeRF) and 3D Gaussian Splatting (3DGS) across indoor and outdoor scenes, measuring reconstruction noise, detail preservation and processing time. 3DGS outperforms NeRF in computational efficiency and noise reduction.
-`NeRF` · `3D Gaussian Splatting` · `indoor` · `outdoor` · `novel view synthesis`
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
+
+```bibtex
+@phdthesis{rangelov2026enhancing,
+  author = {Dimitar Rangelov},
+  title = {{Enhancing Crime Scene Investigations: From Technology to Evidence}},
+  year = {2026},
+  school = {University of Twente},
+  url = {https://mitkor2.github.io/3DReconstructionPapers/papers/enhancing-crime-scene-investigations-phd-dissertation/}
+}
+```
+
+</details>
+
+#### [Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments](https://doi.org/10.48084/etasr.16947)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Evgeni Genchev, Maurice van Keulen, Radoslav Miltchev* — **Engineering, Technology & Applied Science Research 16(2), 33736–33745** — doi:10.48084/etasr.16947 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/evaluating-3d-reconstruction-nerf-vs-gaussian-splatting-indoor-outdoor/)
+
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
+
+```bibtex
+@article{rangelov2026evaluating,
+  author = {Dimitar Rangelov and Sierd Waanders and Kars Waanders and Evgeni Genchev and Maurice van Keulen and Radoslav Miltchev},
+  title = {{Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting in Indoor and Outdoor Environments}},
+  year = {2026},
+  journal = {Engineering, Technology & Applied Science Research 16(2), 33736–33745},
+  doi = {10.48084/etasr.16947},
+  url = {https://doi.org/10.48084/etasr.16947}
+}
+```
+
+</details>
 
 ### 2025
 
-#### [Utilizing JIT Python runtime and parameter optimization for CPU‑based Gaussian Splatting thumbnailer](https://mitkor2.github.io/3DReconstructionPapers/papers/jit-python-cpu-gaussian-splatting-thumbnailer/)
-*Evgeni Genchev, Dimitar Rangelov, Kars Waanders, Sierd Waanders* — **Array 28, 100611 (Elsevier)** — [doi:10.1016/j.array.2025.100611](https://doi.org/10.1016/j.array.2025.100611)
-
-A lightweight CPU‑only thumbnailer for Gaussian Splatting data using Numba JIT compilation in Python — a ~156× speedup over pure Python, producing 720p previews in ~1.8 s for GPU‑less environments such as field forensics and embedded vision.
-`Gaussian Splatting` · `JIT` · `Numba` · `CPU rendering` · `embedded vision`
-
 #### [Emerging Sensing Technologies in Crime Investigation: Applications and Innovations – A Comprehensive Review](https://mitkor2.github.io/3DReconstructionPapers/papers/emerging-sensing-technologies-in-crime-investigation-review/)
-*Dimitar Rangelov, Radoslav Miltchev, Jaap Knotter* — **Conference paper**
+*Dimitar Rangelov, Radoslav Miltchev, Jaap Knotter* — **Conference paper** — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/emerging-sensing-technologies-in-crime-investigation-review/)
 
-A comprehensive review of emerging sensing technologies for crime investigation: 3D reconstruction for virtual scene analysis, electronic noses for drug and explosive detection, thermal imaging, and ground‑penetrating radar — their applications, limitations and integration potential.
-`sensing technologies` · `electronic nose` · `thermal imaging` · `GPR` · `forensics`
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
 
-#### [Three‑Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review](https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-techniques-lighting-conditions-review/)
-*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Lights 1(1), 1** — [doi:10.3390/lights1010001](https://doi.org/10.3390/lights1010001)
+```bibtex
+@inproceedings{rangelov2025emerging,
+  author = {Dimitar Rangelov and Radoslav Miltchev and Jaap Knotter},
+  title = {{Emerging Sensing Technologies in Crime Investigation: Applications and Innovations – A Comprehensive Review}},
+  year = {2025},
+  booktitle = {Conference paper},
+  url = {https://mitkor2.github.io/3DReconstructionPapers/papers/emerging-sensing-technologies-in-crime-investigation-review/}
+}
+```
 
-A comprehensive survey of classical and modern 3D reconstruction — SfM, MVS, Photometric Stereo, NeRF and 3DGS — critically evaluating performance under varying illumination and lighting‑induced artifacts.
-`review` · `lighting conditions` · `SfM` · `MVS` · `Photometric Stereo`
+</details>
 
-#### [Impact of Data Capture Methods on 3D Reconstruction with Gaussian Splatting](https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-data-capture-methods-on-3d-reconstruction-with-gaussian-splatting/)
-*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Journal of Imaging 11(2), 65** — [doi:10.3390/jimaging11020065](https://doi.org/10.3390/jimaging11020065)
+#### [Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques](https://doi.org/10.20944/preprints202504.1068.v1)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Preprints.org (preprint)** — doi:10.20944/preprints202504.1068.v1 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/nerf-vs-gaussian-splatting-various-filming-techniques/)
 
-How camera orientation, filming speed, data layering and scanning path affect 3D reconstruction quality for indoor crime‑scene investigation.
-`Gaussian Splatting` · `data capture` · `filming techniques` · `forensics`
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
 
-#### [Evaluating 3D Reconstruction: A Side‑by‑Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques](https://mitkor2.github.io/3DReconstructionPapers/papers/nerf-vs-gaussian-splatting-various-filming-techniques/)
-*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Preprint** — [doi:10.20944/preprints202504.1068.v1](https://doi.org/10.20944/preprints202504.1068.v1)
+```bibtex
+@misc{rangelov2025evaluating,
+  author = {Dimitar Rangelov and Sierd Waanders and Kars Waanders and Maurice van Keulen and Radoslav Miltchev},
+  title = {{Evaluating 3D Reconstruction: A Side-by-Side Comparison of NeRF and Gaussian Splatting Under Various Filming Techniques}},
+  year = {2025},
+  howpublished = {Preprints.org (preprint)},
+  doi = {10.20944/preprints202504.1068.v1},
+  url = {https://doi.org/10.20944/preprints202504.1068.v1}
+}
+```
 
-A side‑by‑side comparison of NeRF and 3DGS under different camera movements, orientations and scanning strategies.
-`NeRF` · `3DGS` · `video capture`
+</details>
 
-#### [Exploring the UAV‑Based Ground‑Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg](https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/)
-*Dimitar Rangelov, Tasha Yara Kronshorst, Jiri Jonker, Kars Waanders, Nilay Swarge, Evgeni Genchev, Sylvia Molthof, Louise Lijcklama à Nijeholt, Jaap Knotter* — **Engineering, Technology & Applied Science Research 15(5), 28208–28218** — [doi:10.48084/etasr.12914](https://doi.org/10.48084/etasr.12914)
+#### [Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg](https://doi.org/10.48084/etasr.12914)
+*Dimitar Rangelov, Tasha Yara Kronshorst, Jiri Jonker, Kars Waanders, Nilay Swarge, Evgeni Genchev, Sylvia Molthof, Louise Lijcklama à Nijeholt, Jaap Knotter* — **Engineering, Technology & Applied Science Research 15(5), 28208–28218** — doi:10.48084/etasr.12914 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/uav-based-ground-penetrating-radar-historical-site-detection/)
 
-UAV‑mounted ground‑penetrating radar (UAV‑GPR) for non‑invasive detection of buried features at a suspected WWII site in the Netherlands.
-`UAV` · `drone` · `ground‑penetrating radar` · `archaeology` · `remote sensing`
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
+
+```bibtex
+@article{rangelov2025exploring,
+  author = {Dimitar Rangelov and Tasha Yara Kronshorst and Jiri Jonker and Kars Waanders and Nilay Swarge and Evgeni Genchev and Sylvia Molthof and Louise Lijcklama à Nijeholt and Jaap Knotter},
+  title = {{Exploring the UAV-Based Ground-Penetrating Radar for Historical Site Detection: A WWII Hiding Place Case Study near Bornerbroekseweg}},
+  year = {2025},
+  journal = {Engineering, Technology & Applied Science Research 15(5), 28208–28218},
+  doi = {10.48084/etasr.12914},
+  url = {https://doi.org/10.48084/etasr.12914}
+}
+```
+
+</details>
+
+#### [Impact of Data Capture Methods on 3D Reconstruction with Gaussian Splatting](https://doi.org/10.3390/jimaging11020065)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Journal of Imaging 11(2), 65** — doi:10.3390/jimaging11020065 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-data-capture-methods-on-3d-reconstruction-with-gaussian-splatting/)
+
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
+
+```bibtex
+@article{rangelov2025impact,
+  author = {Dimitar Rangelov and Sierd Waanders and Kars Waanders and Maurice van Keulen and Radoslav Miltchev},
+  title = {{Impact of Data Capture Methods on 3D Reconstruction with Gaussian Splatting}},
+  year = {2025},
+  journal = {Journal of Imaging 11(2), 65},
+  doi = {10.3390/jimaging11020065},
+  url = {https://doi.org/10.3390/jimaging11020065}
+}
+```
+
+</details>
+
+#### [Three-Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review](https://doi.org/10.3390/lights1010001)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Lights 1(1), 1** — doi:10.3390/lights1010001 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-techniques-lighting-conditions-review/)
+
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
+
+```bibtex
+@article{rangelov2025threedimensional,
+  author = {Dimitar Rangelov and Sierd Waanders and Kars Waanders and Maurice van Keulen and Radoslav Miltchev},
+  title = {{Three-Dimensional Reconstruction Techniques and the Impact of Lighting Conditions on Reconstruction Quality: A Comprehensive Review}},
+  year = {2025},
+  journal = {Lights 1(1), 1},
+  doi = {10.3390/lights1010001},
+  url = {https://doi.org/10.3390/lights1010001}
+}
+```
+
+</details>
+
+#### [Utilizing JIT Python runtime and parameter optimization for CPU-based Gaussian Splatting thumbnailer](https://doi.org/10.1016/j.array.2025.100611)
+*Evgeni Genchev, Dimitar Rangelov, Kars Waanders, Sierd Waanders* — **Array 28, 100611** — doi:10.1016/j.array.2025.100611 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/jit-python-cpu-gaussian-splatting-thumbnailer/)
+
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
+
+```bibtex
+@article{genchev2025utilizing,
+  author = {Evgeni Genchev and Dimitar Rangelov and Kars Waanders and Sierd Waanders},
+  title = {{Utilizing JIT Python runtime and parameter optimization for CPU-based Gaussian Splatting thumbnailer}},
+  year = {2025},
+  journal = {Array 28, 100611},
+  doi = {10.1016/j.array.2025.100611},
+  url = {https://doi.org/10.1016/j.array.2025.100611}
+}
+```
+
+</details>
 
 ### 2024
 
-#### [3D Reconstruction in Crime Scenes Investigation: Impacts, Benefits, and Limitations](https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-in-crime-scenes-investigation/)
-*Dimitar Rangelov, Jaap Knotter, Radoslav Miltchev* — **IntelliSys 2024, Lecture Notes in Networks and Systems, vol. 1065, pp. 46–64, Springer** — [doi:10.1007/978-3-031-66329-1_4](https://doi.org/10.1007/978-3-031-66329-1_4)
+#### [3D Reconstruction in Crime Scenes Investigation: Impacts, Benefits, and Limitations](https://doi.org/10.1007/978-3-031-66329-1_4)
+*Dimitar Rangelov, Jaap Knotter, Radoslav Miltchev* — **Intelligent Systems and Applications (IntelliSys 2024), Lecture Notes in Networks and Systems, vol. 1065, pp. 46–64, Springer** — doi:10.1007/978-3-031-66329-1_4 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/3d-reconstruction-in-crime-scenes-investigation/)
 
-The impacts, benefits and limitations of 3D reconstruction for documentation, measurement, analysis and courtroom presentation in forensic workflows.
-`crime‑scene investigation` · `digital forensics` · `forensic documentation`
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
 
-#### [Impact of Camera Settings on 3D Reconstruction Quality: Insights from NeRF and Gaussian Splatting](https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-camera-settings-on-3d-reconstruction-quality/)
-*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Sensors 24(23), 7594** — [doi:10.3390/s24237594](https://doi.org/10.3390/s24237594)
+```bibtex
+@inproceedings{rangelov2024reconstruction,
+  author = {Dimitar Rangelov and Jaap Knotter and Radoslav Miltchev},
+  title = {{3D Reconstruction in Crime Scenes Investigation: Impacts, Benefits, and Limitations}},
+  year = {2024},
+  booktitle = {Intelligent Systems and Applications (IntelliSys 2024), Lecture Notes in Networks and Systems, vol. 1065, pp. 46–64, Springer},
+  doi = {10.1007/978-3-031-66329-1_4},
+  url = {https://doi.org/10.1007/978-3-031-66329-1_4}
+}
+```
 
-How ISO, shutter speed and aperture affect NeRF and Gaussian Splatting reconstructions; identifies optimal settings (ISO 200, 1/60 s, f/3.5) for indoor crime scenes.
-`camera settings` · `ISO` · `shutter speed` · `aperture` · `neural rendering`
+</details>
+
+#### [Impact of Camera Settings on 3D Reconstruction Quality: Insights from NeRF and Gaussian Splatting](https://doi.org/10.3390/s24237594)
+*Dimitar Rangelov, Sierd Waanders, Kars Waanders, Maurice van Keulen, Radoslav Miltchev* — **Sensors 24(23), 7594** — doi:10.3390/s24237594 — [abstract & keywords](https://mitkor2.github.io/3DReconstructionPapers/papers/impact-of-camera-settings-on-3d-reconstruction-quality/)
+
+<details><summary>📋 <b>Cite this paper</b> (BibTeX — copy with one click)</summary>
+
+```bibtex
+@article{rangelov2024impact,
+  author = {Dimitar Rangelov and Sierd Waanders and Kars Waanders and Maurice van Keulen and Radoslav Miltchev},
+  title = {{Impact of Camera Settings on 3D Reconstruction Quality: Insights from NeRF and Gaussian Splatting}},
+  year = {2024},
+  journal = {Sensors 24(23), 7594},
+  doi = {10.3390/s24237594},
+  url = {https://doi.org/10.3390/s24237594}
+}
+```
+
+</details>
 
 ---
 
