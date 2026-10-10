@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: >-
+  If you use or reference this publication index, please cite the individual
+  papers listed at https://mitkor2.github.io/3DReconstructionPapers/ — every
+  paper page provides a plain-text citation, BibTeX, and RIS downloads. A
+  combined BibTeX file for all papers is available at
+  https://mitkor2.github.io/3DReconstructionPapers/citations.bib
+title: "3D Reconstruction Research Papers — Dimitar Rangelov"
+type: dataset
+authors:
+  - family-names: Rangelov
+    given-names: Dimitar
+    orcid: "https://orcid.org/0009-0005-8511-1555"
+    affiliation: "Saxion University of Applied Sciences"
+url: "https://mitkor2.github.io/3DReconstructionPapers/"
+repository-code: "https://github.com/mitkor2/3DReconstructionPapers"
+keywords:
+  - 3D reconstruction
+  - NeRF
+  - Gaussian Splatting
+  - photogrammetry
+  - forensics
+  - crime scene investigation
+  - UAV
+  - ground-penetrating radar

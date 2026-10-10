@@ -101,6 +101,7 @@ function layout({ title, description, canonical, head = "", body, bodyClass = ""
     AUTHOR.website && `<a href="${esc(AUTHOR.website)}" rel="me">ResearchGate</a>`,
     `<a href="${esc(href("/feed.xml"))}">Atom feed</a>`,
     `<a href="${esc(url("/llms.txt"))}">llms.txt</a>`,
+    `<a href="${esc(href("/citations.bib"))}">Cite (all papers, .bib)</a>`,
     `<a href="${esc(href("/admin/"))}" rel="nofollow">Admin</a>`,
   ].filter(Boolean).join("\n    ");
   return `<!doctype html>
@@ -152,22 +153,49 @@ function ogTags({ title, description, canonical, type = "website" }) {
 <meta name="twitter:description" content="${esc(description)}">`;
 }
 
+function pubType(p) {
+  const v = p.venue || "";
+  if (/preprint/i.test(v)) return "preprint";
+  if (/conference|proceedings|intellisys|lecture notes|symposium|workshop/i.test(v)) return "conference";
+  return "journal";
+}
+
 function bibtex(p) {
   const lastName = (p.authors[0] || "").trim().split(/\s+/).pop().toLowerCase().replace(/[^a-z]/g, "");
   const firstWord = (p.title.split(/\s+/).find((w) => w.length > 3) || "paper").toLowerCase().replace(/[^a-z0-9]/g, "");
   const key = `${lastName}${p.year || ""}${firstWord}`;
-  const isPreprint = /preprint/i.test(p.venue || "");
-  const isConf = /conference|proceedings|intellisys|lecture notes|symposium|workshop/i.test(p.venue || "");
-  const type = isPreprint ? "misc" : isConf ? "inproceedings" : "article";
+  const type = { preprint: "misc", conference: "inproceedings", journal: "article" }[pubType(p)];
+  const venueField = { preprint: "howpublished", conference: "booktitle", journal: "journal" }[pubType(p)];
   const fields = [
     ["author", p.authors.join(" and ")],
     ["title", `{${p.title}}`],
     ["year", String(p.year || "")],
-    [isConf ? "booktitle" : isPreprint ? "howpublished" : "journal", p.venue || ""],
+    [venueField, p.venue || ""],
     ["doi", p.doi || ""],
     ["url", p.doi ? `https://doi.org/${p.doi}` : url(paperPath(p))],
   ].filter(([, v]) => v);
   return `@${type}{${key},\n${fields.map(([k, v]) => `  ${k} = {${v}}`).join(",\n")}\n}`;
+}
+
+function ris(p) {
+  // RIS format — imports directly into Zotero, Mendeley, EndNote, RefWorks.
+  const ty = { journal: "JOUR", conference: "CPAPER", preprint: "UNPB" }[pubType(p)];
+  const lines = [`TY  - ${ty}`];
+  for (const a of p.authors) {
+    const parts = a.trim().split(/\s+/);
+    const last = parts.pop();
+    lines.push(`AU  - ${last}${parts.length ? ", " + parts.join(" ") : ""}`);
+  }
+  lines.push(`TI  - ${p.title}`);
+  if (p.venue) lines.push(`${ty === "JOUR" ? "JO" : "T2"}  - ${p.venue}`);
+  if (p.year) lines.push(`PY  - ${p.year}`);
+  if (p.published) lines.push(`DA  - ${p.published.replace(/-/g, "/")}`);
+  if (p.doi) lines.push(`DO  - ${p.doi}`);
+  lines.push(`UR  - ${p.doi ? `https://doi.org/${p.doi}` : url(paperPath(p))}`);
+  if (p.abstract) lines.push(`AB  - ${String(p.abstract).replace(/\s+/g, " ").trim()}`);
+  for (const k of p.keywords) lines.push(`KW  - ${k}`);
+  lines.push("ER  - ");
+  return lines.join("\r\n") + "\r\n";
 }
 
 function jsonLd(obj) {
@@ -314,14 +342,18 @@ function paperPage(p) {
     <h2>Keywords</h2>
     <ul class="keywords">${p.keywords.map((k) => `<li itemprop="keywords">${esc(k)}</li>`).join("")}</ul>
   </section>` : ""}
-  <section class="block">
+  <section class="block" id="cite">
     <h2>Cite this paper</h2>
     <div class="cite-row">
       <p class="citation" id="cite-text">${esc(citation)}</p>
       <button class="copy" type="button" data-copy="cite-text">Copy citation</button>
     </div>
     <pre class="bibtex" id="cite-bibtex">${esc(bibtex(p))}</pre>
-    <p style="margin:0.6rem 0 0"><button class="copy" type="button" data-copy="cite-bibtex">Copy BibTeX</button></p>
+    <p class="cite-downloads">
+      <button class="copy" type="button" data-copy="cite-bibtex">Copy BibTeX</button>
+      <a href="${esc(href(paperPath(p) + "citation.bib"))}" download="${esc(p.slug)}.bib">Download BibTeX (.bib)</a> ·
+      <a href="${esc(href(paperPath(p) + "citation.ris"))}" download="${esc(p.slug)}.ris">Download RIS — Zotero / Mendeley / EndNote</a>
+    </p>
   </section>
   ${relatedHtml}
   <a class="back-link" href="${esc(href("/"))}">← All papers</a>
@@ -388,7 +420,7 @@ function indexPage() {
   <li class="paper-card">
     ${p.venue ? `<span class="venue-pill">${esc(p.venue.split(/[\d(,]/)[0].trim() || p.venue)}</span>` : ""}
     <h3><a href="${esc(href(paperPath(p)))}">${esc(p.title)}</a></h3>
-    <p class="meta">${esc(p.authors.join(", "))}${p.year ? ` · ${esc(String(p.year))}` : ""}</p>
+    <p class="meta">${esc(p.authors.join(", "))}${p.year ? ` · ${esc(String(p.year))}` : ""} · <a class="cite-link" href="${esc(href(paperPath(p)))}#cite">Cite</a></p>
     <p class="abstract">${esc(truncate(p.abstract, 260))}</p>
     ${p.keywords.length ? `<ul class="keywords">${p.keywords.slice(0, 6).map((k) => `<li>${esc(k)}</li>`).join("")}</ul>` : ""}
   </li>`;
@@ -480,6 +512,7 @@ function llmsTxt() {
     "## Full content",
     "",
     `- [Full abstracts of all papers](${url("/llms-full.txt")})`,
+    `- [BibTeX citations for all papers](${url("/citations.bib")})`,
     "",
   ].filter((l) => l !== null);
   return lines.join("\n");
@@ -561,7 +594,12 @@ fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(DIST, { recursive: true });
 
 write("index.html", indexPage());
-for (const p of papers) write(path.join("papers", p.slug, "index.html"), paperPage(p));
+for (const p of papers) {
+  write(path.join("papers", p.slug, "index.html"), paperPage(p));
+  write(path.join("papers", p.slug, "citation.bib"), bibtex(p) + "\n");
+  write(path.join("papers", p.slug, "citation.ris"), ris(p));
+}
+write("citations.bib", papers.map((p) => bibtex(p)).join("\n\n") + "\n");
 write("sitemap.xml", sitemap());
 write("robots.txt", robots());
 write("llms.txt", llmsTxt());
